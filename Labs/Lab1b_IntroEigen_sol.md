@@ -107,12 +107,43 @@ $$
 
 - Compute the scalar product (`.dot()`) between the vector $\tilde{v}$ and the vector obtained by taking the first 50 entries of the first row of $\tilde{A}$.
 
+### Solution
+```
+#include <Eigen/Dense>
+#include <iostream>
+ 
+using namespace std;
+using Eigen::VectorXd;
+using Eigen::MatrixXd;
+ 
+int main()
+{
+  int n = 100;
+  MatrixXd A = MatrixXd::Zero(n,n);
+    for (int i=0; i<n; i++) {
+        A(i, i) = 2.0;
+        if(i>0) A(i, i-1) = 1.0;
+        if(i<n-1) A(i, i+1) = -1.0;
+    }
+
+  VectorXd v = VectorXd::Constant(50, 1.0);     // define vector
+  cout << "matrix vector multiplication =" << endl << A.topLeftCorner(50,50)*v << endl;
+
+  cout << "norm of A = " << A.norm() << endl;
+  cout << "norm of symmetric part " << (A.transpose() + A).norm() << endl;
+  cout << "dot product " << v.dot((A.row(0)).head(50)) << endl;
+}
+```
 
 # 2. Image processing with Eigen
 
 Images are stored as a collection of integers values assigned to each pixel. A greyscale image can be seen as a matrix $M$ where the coefficient $M_{ij}$ corresponds to the color of the pixel having coordinates $(i,j)$ in the picture. The admissible shades of grey range from 0 (black) to 255 (white).
 
+![Greyscale Image](./assets/greyscale.png)
+
 An RGB picture is given by three channels, namely three integer values ranging again from 0 to 255 expressing the intensity of red, green, and blue color, respectively. 
+
+![RGB Image](./assets/rgb_image.png)
 
 ### 2.1 Import and export images in Eigen
 
@@ -149,7 +180,7 @@ int main(int argc, char* argv[]) {
 
   // Load the image using stb_image
   int width, height, channels;
-  unsigned char* image_data = stbi_load(input_image_path, &width, &height, &channels, 3);  // Force load as RGB
+  unsigned char* image_data = stbi_load(input_image_path, &width, &height, &channels, 3);  // 3- Force load as RGB 1- is for grayscaale
 
   if (!image_data) {
     std::cerr << "Error: Could not load image " << input_image_path << std::endl;
@@ -237,7 +268,97 @@ int main(int argc, char* argv[]) {
 
 ```
 
+In Eigen modify the imported image in order to
+
 - 2. Perform a 90° degree rotation of the image.
 
 - 3. Make the image darker by subtracting a value 50 to each pixel
 
+- 4. Export the resulting images using `stb_image_write.h`
+
+### Solution:
+
+```
+#include <Eigen/Dense>
+#include <iostream>
+#include <cstdlib>
+
+// from https://github.com/nothings/stb/tree/master
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+
+using namespace Eigen;
+
+int main(int argc, char* argv[]) {
+  if (argc < 2) {
+    std::cerr << "Usage: " << argv[0] << " <image_path>" << std::endl;
+    return 1;
+  }
+
+  const char* input_image_path = argv[1];
+
+  // Load the image using stb_image
+  int width, height, channels;
+  // for greyscale images force to load only one channel
+  unsigned char* image_data = stbi_load(input_image_path, &width, &height, &channels, 1);
+  if (!image_data) {
+    std::cerr << "Error: Could not load image " << input_image_path
+              << std::endl;
+    return 1;
+  }
+
+  std::cout << "Image loaded: " << width << "x" << height << " with "
+            << channels << " channels." << std::endl;
+
+  // Prepare Eigen matrices for each RGB channel
+  MatrixXd dark(height, width), light(height, width), rotate(width, height);
+
+  // Fill the matrices with image data
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      int index = (i * width + j) * channels;  // 1 channel (Greyscale) 3 channels (RGB)
+      dark(i, j) = std::max(static_cast<double>(image_data[index]) - 50.,0.0) / 255.0;
+      light(i, j) = std::min(static_cast<double>(image_data[index]) + 50.,255.) / 255.0;
+      rotate(width-j-1, i) = static_cast<double>(image_data[index]) / 255.0;
+    }
+  }
+  // Free memory!!!
+  stbi_image_free(image_data);
+
+  Matrix<unsigned char, Dynamic, Dynamic, RowMajor> dark_image(height, width);
+  // Use Eigen's unaryExpr to map the grayscale values (0.0 to 1.0) to 0 to 255
+  dark_image = dark.unaryExpr([](double val) -> unsigned char {
+    return static_cast<unsigned char>(val * 255.0);
+  });
+
+  // Save the image using stb_image_write
+  const std::string output_image_path1 = "dark_image.png";
+  if (stbi_write_png(output_image_path1.c_str(), width, height, 1,
+                     dark_image.data(), width) == 0) {
+    std::cerr << "Error: Could not save grayscale image" << std::endl;
+
+    return 1;
+  }
+
+  Matrix<unsigned char, Dynamic, Dynamic, RowMajor> rotate_image(width, height);
+  // Use Eigen's unaryExpr to map the grayscale values (0.0 to 1.0) to 0 to 255
+  rotate_image = rotate.unaryExpr([](double val) -> unsigned char {
+    return static_cast<unsigned char>(val * 255.0);
+  });
+
+  // Save the image using stb_image_write
+  const std::string output_image_path2 = "rotate_image.png";
+  if (stbi_write_png(output_image_path2.c_str(), height, width, 1,
+                     rotate_image.data(), height) == 0) {
+    std::cerr << "Error: Could not save output image" << std::endl;
+
+    return 1;
+  }
+
+  std::cout << "Images saved to " << output_image_path1 << " and " << output_image_path2 << std::endl;
+
+  return 0;
+}
+```
