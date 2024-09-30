@@ -19,7 +19,8 @@ use `v(i)`
 #include <Eigen/Dense>
  
 using Eigen::MatrixXd;
-using Eigen::VectorXd;
+using Eige
+
  
 int main()
 {
@@ -312,7 +313,7 @@ int main(int argc, char* argv[]) {
   std::cout << "Image loaded: " << width << "x" << height << " with "
             << channels << " channels." << std::endl;
 
-  // Prepare Eigen matrices for each RGB channel
+  // Prepare Eigen matrices
   MatrixXd dark(height, width), light(height, width), rotate(width, height);
 
   // Fill the matrices with image data
