@@ -1,0 +1,21 @@
+
+number of processes = 4
+matrix size = 416 x 416 (8562 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+BiCGSTAB: number of iterations = 4001
+BiCGSTAB:   double             = 4001
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 4.709954e-02 sec.
+BiCGSTAB:   preconditioner     = 4.610000e-07 sec.
+BiCGSTAB:     matrix creation  = 4.610000e-07 sec.
+BiCGSTAB:   linear solver      = 4.709908e-02 sec.
+BiCGSTAB: relative residual    = 8.313263e-02
+
