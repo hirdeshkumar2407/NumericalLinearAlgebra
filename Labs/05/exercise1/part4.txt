@@ -1,0 +1,24 @@
+
+number of processes = 1
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 5.000000e-01
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.996352e-01
+Inverse: number of iterations = 36
+Inverse: elapsed time         = 8.058720e-01 sec.
+Inverse:   preconditioner     = 8.501040e-03 sec.
+Inverse:     matrix creation  = 1.403000e-06 sec.
+Inverse:   linear solver      = 7.947246e-01 sec.
+Inverse: relative residual    = 5.375175e-11
+
+./eigen1 fluid_sym.mtx eigvecs.mtx hist.txt -e ii -etol 1.0e-10 -i cg -shift 0.5

@@ -1,0 +1,53 @@
+
+number of processes = 1
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : none
+size of subspace      : 4
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: elapsed time         = 1.408147e+00 sec.
+Subspace: number of iterations = 35
+Subspace: relative residual    = 8.244147e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 8.268053e-07
+Subspace: elapsed time         = 1.387658e+00 sec.
+Subspace: number of iterations = 33
+Subspace: relative residual    = 5.892458e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 1.963099e-06
+Subspace: elapsed time         = 1.732947e+00 sec.
+Subspace: number of iterations = 60
+Subspace: relative residual    = 9.812426e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 3.094134e-06
+Subspace: elapsed time         = 5.013998e+01 sec.
+Subspace: number of iterations = 1000
+Subspace: relative residual    = 1.103060e-12
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: number of iterations = 35
+Subspace: elapsed time         = 5.466893e+01 sec.
+Subspace:   preconditioner     = 2.705900e-05 sec.
+Subspace:     matrix creation  = 1.484000e-06 sec.
+Subspace:   linear solver      = 1.405527e+00 sec.
+Subspace: relative residual    = 8.244147e-13
+
+./eigen2 fluid_sym.mtx evals.txt eigenvecs.mtx  hist.txt -ss 4 -ie ii -i cg

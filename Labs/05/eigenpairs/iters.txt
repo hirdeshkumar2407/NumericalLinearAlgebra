@@ -1,0 +1,8 @@
+%%MatrixMarket vector coordinate integer general
+6
+1                           19
+2                           89
+3                           61
+4                         1000
+5                         1000
+6                          151

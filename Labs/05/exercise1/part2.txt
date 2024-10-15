@@ -1,0 +1,22 @@
+
+number of processes = 1
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-06 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 1.216251e+00
+Power: number of iterations = 20927
+Power: elapsed time         = 9.324893e-01 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.998045e-07
+
+./eigen1 fluid_sym.mtx eigvecs.mtx hist.txt -e pi -etol 1.0e-6 -emaxiter 30000

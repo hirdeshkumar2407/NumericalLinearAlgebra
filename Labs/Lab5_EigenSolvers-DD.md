@@ -29,6 +29,13 @@ mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis etest1.c -o eigen1
 mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt 
 ```
 
+----
+
+We are computing 
+<b>input:</b> Matrix A
+<b>output:</b>  &#955;(eigen value), x<sub>&#955;<sub
+<b>residual:</b> ||(A- &#955;)x<sub>&#955;</sub>||
+Ax =  &#955;x Eigen Product 
 ## Options for eigensolvers 
 
 Several additional options can be selected. A non-exhaustive list is presented in the following examples:

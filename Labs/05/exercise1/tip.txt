@@ -1,0 +1,2 @@
+power method - bigest eigenvalue
+inverse method - smallest eigen value

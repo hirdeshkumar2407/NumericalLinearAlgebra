@@ -1,0 +1,1602 @@
+hirdesh@hirdesh options-for-eigensolvers $ ./eigen1 testmat0.mtx ei
+gvec.txt hist.txt
+
+number of processes = 1
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 1.620281e-01
+CR: number of iterations = 45
+CR: elapsed time         = 2.955767e-03 sec.
+CR:   preconditioner     = 9.000000e-08 sec.
+CR:     matrix creation  = 9.000000e-08 sec.
+CR:   linear solver      = 8.576000e-06 sec.
+CR: relative residual    = 5.425258e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 1.620281e-01
+CR: number of iterations = 45
+CR: elapsed time         = 9.184040e-04 sec.
+CR:   preconditioner     = 7.000000e-08 sec.
+CR:     matrix creation  = 7.000000e-08 sec.
+CR:   linear solver      = 4.388000e-06 sec.
+CR: relative residual    = 5.460648e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.837972e+00
+Power: number of iterations = 960
+Power: elapsed time         = 3.635995e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.715109e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -etol 1.0e-8
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.365014e+00
+Power: number of iterations = 143
+Power: elapsed time         = 9.165500e-04 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.446238e-09
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -etol 1.0e-8
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 13
+Inverse: elapsed time         = 9.065010e-04 sec.
+Inverse:   preconditioner     = 7.918000e-06 sec.
+Inverse:     matrix creation  = 4.600000e-07 sec.
+Inverse:   linear solver      = 7.066550e-04 sec.
+Inverse: relative residual    = 2.597963e-09
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ilu -etol 1.0e-8
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+lis_esolver.c(822) : lis_esolver_set_option_esolver : error ILL_ARG :Parameter LIS_EOPTIONS_ESOLVER is not correct
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[42414,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -etol 1.0e-8 -i cg -p ilu
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : ILU
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 13
+Inverse: elapsed time         = 1.529221e-03 sec.
+Inverse:   preconditioner     = 8.286200e-05 sec.
+Inverse:     matrix creation  = 4.400000e-07 sec.
+Inverse:   linear solver      = 1.198446e-03 sec.
+Inverse: relative residual    = 2.597963e-09
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e cr
+
+number of processes = 4
+lis_input.c(94) : lis_input : error FILE_IO_ERROR :cannot open file testmat2.mtx
+[hirdesh:08310] *** Process received signal ***
+[hirdesh:08310] Signal: Segmentation fault (11)
+[hirdesh:08310] Signal code: Address not mapped (1)
+[hirdesh:08310] Failing at address: (nil)
+[hirdesh:08311] *** Process received signal ***
+[hirdesh:08311] Signal: Segmentation fault (11)
+[hirdesh:08311] Signal code: Address not mapped (1)
+[hirdesh:08311] Failing at address: (nil)
+[hirdesh:08312] *** Process received signal ***
+[hirdesh:08312] Signal: Segmentation fault (11)
+[hirdesh:08312] Signal code: Address not mapped (1)
+[hirdesh:08312] Failing at address: (nil)
+[hirdesh:08314] *** Process received signal ***
+[hirdesh:08314] Signal: Segmentation fault (11)
+[hirdesh:08314] Signal code: Address not mapped (1)
+[hirdesh:08314] Failing at address: (nil)
+[hirdesh:08310] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x764ee41e9d60]
+[hirdesh:08310] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x764ee4277930]
+[hirdesh:08310] [ 2] ./eigen1[0x40137a]
+[hirdesh:08310] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x764ee3c627dd]
+[hirdesh:08310] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08310] *** End of error message ***
+[hirdesh:08311] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x770e230d1d60]
+[hirdesh:08311] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x770e2315f930]
+[hirdesh:08311] [ 2] ./eigen1[0x40137a]
+[hirdesh:08311] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x770e22c627dd]
+[hirdesh:08311] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08311] *** End of error message ***
+[hirdesh:08312] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x76a823d34d60]
+[hirdesh:08312] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x76a823dc2930]
+[hirdesh:08312] [ 2] ./eigen1[0x40137a]
+[hirdesh:08312] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x76a8238627dd]
+[hirdesh:08312] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08312] *** End of error message ***
+[hirdesh:08314] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x7d6832262d60]
+[hirdesh:08314] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x7d68322f0930]
+[hirdesh:08314] [ 2] ./eigen1[0x40137a]
+[hirdesh:08314] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x7d6831c627dd]
+[hirdesh:08314] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08314] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 1 with PID 0 on node hirdesh exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e cr
+
+number of processes = 4
+lis_input.c(94) : lis_input : error FILE_IO_ERROR :cannot open file testmat2.mtx
+[hirdesh:08335] *** Process received signal ***
+[hirdesh:08335] Signal: Segmentation fault (11)
+[hirdesh:08335] Signal code: Address not mapped (1)
+[hirdesh:08335] Failing at address: (nil)
+[hirdesh:08335] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x79fd29441d60]
+[hirdesh:08335] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x79fd294cf930]
+[hirdesh:08335] [ 2] ./eigen1[0x40137a]
+[hirdesh:08335] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x79fd28e627dd]
+[hirdesh:08335] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08335] *** End of error message ***
+[hirdesh:08336] *** Process received signal ***
+[hirdesh:08336] Signal: Segmentation fault (11)
+[hirdesh:08336] Signal code: Address not mapped (1)
+[hirdesh:08336] Failing at address: (nil)
+[hirdesh:08336] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x730763cf0d60]
+[hirdesh:08336] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x730763d7e930]
+[hirdesh:08336] [ 2] ./eigen1[0x40137a]
+[hirdesh:08336] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x7307638627dd]
+[hirdesh:08336] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08336] *** End of error message ***
+[hirdesh:08337] *** Process received signal ***
+[hirdesh:08337] Signal: Segmentation fault (11)
+[hirdesh:08337] Signal code: Address not mapped (1)
+[hirdesh:08337] Failing at address: (nil)
+[hirdesh:08337] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x7b965ab16d60]
+[hirdesh:08337] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x7b965aba4930]
+[hirdesh:08337] [ 2] ./eigen1[0x40137a]
+[hirdesh:08337] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x7b965a6627dd]
+[hirdesh:08337] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08337] *** End of error message ***
+[hirdesh:08338] *** Process received signal ***
+[hirdesh:08338] Signal: Segmentation fault (11)
+[hirdesh:08338] Signal code: Address not mapped (1)
+[hirdesh:08338] Failing at address: (nil)
+[hirdesh:08338] [ 0] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libpthread.so.0(+0x11d60)[0x720e48893d60]
+[hirdesh:08338] [ 1] /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/lis/2.0.30/lib/liblis.so.0(lis_vector_duplicateex+0xe0)[0x720e48921930]
+[hirdesh:08338] [ 2] ./eigen1[0x40137a]
+[hirdesh:08338] [ 3] /u/sw/toolchains/gcc-glibc/11.2.0/prefix/lib/libc.so.6(__libc_start_main+0xcd)[0x720e486e47dd]
+[hirdesh:08338] [ 4] ./eigen1[0x4011ca]
+[hirdesh:08338] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 1 with PID 0 on node hirdesh exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.tx^C
+hirdesh@hirdesh options-for-eigensolvers $ ll
+total 800
+drwxrwxr-x 2 hirdesh hirdesh   4096 ott 15 13:29 ./
+drwxrwxr-x 3 hirdesh hirdesh   4096 ott 15 13:27 ../
+-rwxrwxr-x 1 hirdesh hirdesh  17272 ott 15 13:17 eigen1*
+-rw-rw-r-- 1 hirdesh hirdesh   3242 ott 15 13:35 eigvec.txt
+-rw-rw-r-- 1 hirdesh hirdesh    182 ott 15 13:35 hist.txt
+-rw-rw-r-- 1 hirdesh hirdesh 765204 ott 15 13:29 lis-ug-en.pdf
+-rwxrwxrwx 1 hirdesh hirdesh  16238 mag 29  2018 testmat0.mtx*
+hirdesh@hirdesh options-for-eigensolvers $ cp ../../lis-2.0.34/
+AUTHORS         Makefile.in     configure       m4/
+COPYING         NEWS            configure.ac    reconfigure.sh
+ChangeLog       README          doc/            src/
+INSTALL         aclocal.m4      graphics/       test/
+Makefile.am     config/         include/        win/
+hirdesh@hirdesh options-for-eigensolvers $ cp ../../lis-2.0.34/test/
+Makefile.am   etest7.c      spmvtest5.c   test5.c
+Makefile.in   getest1.c     test.sh       test6.c
+defs          getest5.c     test1         test6f.F90
+eigen1        getest5b.c    test1.c       test7.c
+eigvec.txt    hist.txt      test1f.F      test7f.F
+etest1.c      mhd416a.mtx   test2.c       test8f.F90
+etest1f.F     sol.mtx       test2b.c      testmat.mtx
+etest2.c      sol.txt       test2f.F90    testmat0.mtx
+etest3.c      spmvtest1.c   test3.c       testmat2.mtx
+etest4.c      spmvtest2.c   test3b.c      testmat3.mtx
+etest4f.F     spmvtest2b.c  test3c.c      testmat4.mtx
+etest5.c      spmvtest3.c   test4.c       testvec0.mtx
+etest5b.c     spmvtest3b.c  test4f.F
+etest6.c      spmvtest4.c   test5
+hirdesh@hirdesh options-for-eigensolvers $ cp ../../lis-2.0.34/test
+/testmat*  .
+hirdesh@hirdesh options-for-eigensolvers $ ll
+total 920
+drwxrwxr-x 2 hirdesh hirdesh   4096 ott 15 13:36 ./
+drwxrwxr-x 3 hirdesh hirdesh   4096 ott 15 13:27 ../
+-rwxrwxr-x 1 hirdesh hirdesh  17272 ott 15 13:17 eigen1*
+-rw-rw-r-- 1 hirdesh hirdesh   3242 ott 15 13:35 eigvec.txt
+-rw-rw-r-- 1 hirdesh hirdesh    182 ott 15 13:35 hist.txt
+-rw-rw-r-- 1 hirdesh hirdesh 765204 ott 15 13:29 lis-ug-en.pdf
+-rwxrwxr-x 1 hirdesh hirdesh  19468 ott 15 13:36 testmat.mtx*
+-rwxrwxrwx 1 hirdesh hirdesh  16238 ott 15 13:36 testmat0.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  16250 ott 15 13:36 testmat2.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  25598 ott 15 13:36 testmat3.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  55165 ott 15 13:36 testmat4.mtx*
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e cr
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 4.191235e-01
+CR: number of iterations = 348
+CR: elapsed time         = 7.824977e-03 sec.
+CR:   preconditioner     = 4.410000e-07 sec.
+CR:     matrix creation  = 4.410000e-07 sec.
+CR:   linear solver      = 6.783000e-06 sec.
+CR: relative residual    = 9.671916e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e cr -i gmres -p sainv
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : GMRES
+preconditioner        : SAINV
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 4.191235e-01
+CR: number of iterations = 401
+CR: elapsed time         = 5.364196e-03 sec.
+CR:   preconditioner     = 2.910000e-07 sec.
+CR:     matrix creation  = 2.910000e-07 sec.
+CR:   linear solver      = 6.853100e-05 sec.
+CR: relative residual    = 9.695587e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ ll
+total 924
+drwxrwxr-x 2 hirdesh hirdesh   4096 ott 15 13:36 ./
+drwxrwxr-x 3 hirdesh hirdesh   4096 ott 15 13:27 ../
+-rwxrwxr-x 1 hirdesh hirdesh  17272 ott 15 13:17 eigen1*
+-rw-rw-r-- 1 hirdesh hirdesh   3242 ott 15 13:37 eigvec.txt
+-rw-rw-r-- 1 hirdesh hirdesh   5226 ott 15 13:37 hist.txt
+-rw-rw-r-- 1 hirdesh hirdesh 765204 ott 15 13:29 lis-ug-en.pdf
+-rwxrwxr-x 1 hirdesh hirdesh  19468 ott 15 13:36 testmat.mtx*
+-rwxrwxrwx 1 hirdesh hirdesh  16238 ott 15 13:36 testmat0.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  16250 ott 15 13:36 testmat2.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  25598 ott 15 13:36 testmat3.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh  55165 ott 15 13:36 testmat4.mtx*
+hirdesh@hirdesh options-for-eigensolvers $ pwd
+/home/hirdesh/Documents/NumericalLinearAlegbra/Labs/05/options-for-eigensolvers
+hirdesh@hirdesh options-for-eigensolvers $ /home/hirdesh/Documents/NumericalLinearAlegbra/Labs/05/options-for-eigensolvers^C
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -shift 4.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 1.620281e-01
+Power: number of iterations = 168
+Power: elapsed time         = 9.763500e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.689440e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ cp ../../lis-2.0.34/test/testmat*  .^C
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -shift 3.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 3.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.837972e+00
+Power: number of iterations = 587
+Power: elapsed time         = 1.894890e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.604187e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.837972e+00
+Power: number of iterations = 960
+Power: elapsed time         = 3.191998e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.715109e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -shift -1.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -1.000000e+00
+eigensolver status    : LIS_MAXITER(code=4)
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.837972e+00
+Power: number of iterations = 1000
+Power: elapsed time         = 3.267773e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 6.801091e-11
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -shift -0.6
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -6.000000e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 46
+Inverse: elapsed time         = 2.219960e-03 sec.
+Inverse:   preconditioner     = 2.535700e-05 sec.
+Inverse:     matrix creation  = 2.153000e-06 sec.
+Inverse:   linear solver      = 1.651596e-03 sec.
+Inverse: relative residual    = 6.033319e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -shift -0.6
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -6.000000e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.191235e-01
+Inverse: number of iterations = 140
+Inverse: elapsed time         = 9.200804e-03 sec.
+Inverse:   preconditioner     = 1.267660e-04 sec.
+Inverse:     matrix creation  = 6.519000e-06 sec.
+Inverse:   linear solver      = 5.691255e-03 sec.
+Inverse: relative residual    = 8.856820e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -shift 1.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.028388e+00
+Inverse: number of iterations = 49
+Inverse: elapsed time         = 7.532398e-03 sec.
+Inverse:   preconditioner     = 9.519500e-05 sec.
+Inverse:     matrix creation  = 1.581000e-06 sec.
+Inverse:   linear solver      = 7.044943e-03 sec.
+Inverse: relative residual    = 2.771824e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -shift 8.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 8.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 7.580877e+00
+Inverse: number of iterations = 138
+Inverse: elapsed time         = 8.561403e-03 sec.
+Inverse:   preconditioner     = 1.170530e-04 sec.
+Inverse:     matrix creation  = 4.417000e-06 sec.
+Inverse:   linear solver      = 7.531601e-03 sec.
+Inverse: relative residual    = 9.459663e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -shift 10
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.000000e+01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 7.580877e+00
+Inverse: number of iterations = 660
+Inverse: elapsed time         = 2.428901e-02 sec.
+Inverse:   preconditioner     = 3.059560e-04 sec.
+Inverse:     matrix creation  = 2.520800e-05 sec.
+Inverse:   linear solver      = 1.866814e-02 sec.
+Inverse: relative residual    = 9.412809e-13
+
+hirdesh@hirdesh options-for-eigensolvers $ cd ..
+hirdesh@hirdesh 05 $ mv options-for-eigensolvers options-for-eigensolvers-shift
+hirdesh@hirdesh 05 $ mkdir eigenpairs
+hirdesh@hirdesh 05 $ cd eigenpairs/
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/e
+ig
+eigen1      eigvec.txt
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/e
+ig1 .
+cp: cannot stat '../options-for-eigensolvers-shift/eig1': No such file or directory
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/eig .
+eigen1      eigvec.txt
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/e
+igen1 .
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/*.mtx
+cp: target '../options-for-eigensolvers-shift/testmat4.mtx' is not a directory
+hirdesh@hirdesh eigenpairs $ cp ../options-for-eigensolvers-shift/*
+.mtx .
+hirdesh@hirdesh eigenpairs $ ll
+total 164
+drwxrwxr-x 2 hirdesh hirdesh  4096 ott 15 14:08 ./
+drwxrwxr-x 4 hirdesh hirdesh  4096 ott 15 14:07 ../
+-rwxrwxr-x 1 hirdesh hirdesh 17272 ott 15 14:08 eigen1*
+-rwxrwxr-x 1 hirdesh hirdesh 19468 ott 15 14:08 testmat.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16238 ott 15 14:08 testmat0.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16250 ott 15 14:08 testmat2.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 25598 ott 15 14:08 testmat3.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 55165 ott 15 14:08 testmat4.mtx*
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e si -ss 4
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 7.888770e-04 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.041821e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 2.804567e-03 sec.
+Subspace: number of iterations = 95
+Subspace: relative residual    = 6.401837e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.937893e-03 sec.
+Subspace: number of iterations = 62
+Subspace: relative residual    = 6.655840e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 7.706129e-03 sec.
+Subspace: number of iterations = 140
+Subspace: relative residual    = 8.602010e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 1.563299e-02 sec.
+Subspace:   preconditioner     = 8.958000e-06 sec.
+Subspace:     matrix creation  = 6.120000e-07 sec.
+Subspace:   linear solver      = 6.339910e-04 sec.
+Subspace: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e si -ss 2
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 2
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 1.010069e-03 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.041821e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 2.582453e-03 sec.
+Subspace: number of iterations = 95
+Subspace: relative residual    = 6.401837e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 3.703895e-03 sec.
+Subspace:   preconditioner     = 1.000100e-05 sec.
+Subspace:     matrix creation  = 6.100000e-07 sec.
+Subspace:   linear solver      = 8.795120e-04 sec.
+Subspace: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e si -ss 4
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 1.231492e-03 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.041821e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.934516e-03 sec.
+Subspace: number of iterations = 95
+Subspace: relative residual    = 6.401837e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.011062e-03 sec.
+Subspace: number of iterations = 62
+Subspace: relative residual    = 6.655840e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 6.207126e-03 sec.
+Subspace: number of iterations = 140
+Subspace: relative residual    = 8.602010e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 2.806416e-02 sec.
+Subspace:   preconditioner     = 9.107000e-06 sec.
+Subspace:     matrix creation  = 6.100000e-07 sec.
+Subspace:   linear solver      = 1.058582e-03 sec.
+Subspace: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh eigenpairs $ vim eigvec.txt
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e si -ss 8
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 8
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 2.062300e-03 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.041821e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.474066e-03 sec.
+Subspace: number of iterations = 95
+Subspace: relative residual    = 6.401837e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.904808e-03 sec.
+Subspace: number of iterations = 62
+Subspace: relative residual    = 6.655840e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 5.590950e-03 sec.
+Subspace: number of iterations = 140
+Subspace: relative residual    = 8.602010e-13
+
+Subspace: mode number          = 4
+Subspace: eigenvalue           = 7.712926e-01
+Subspace: elapsed time         = 4.675080e-03 sec.
+Subspace: number of iterations = 97
+Subspace: relative residual    = 9.305554e-13
+
+Subspace: mode number          = 5
+Subspace: eigenvalue           = 7.712926e-01
+Subspace: elapsed time         = 7.811662e-03 sec.
+Subspace: number of iterations = 156
+Subspace: relative residual    = 8.213465e-13
+
+Subspace: mode number          = 6
+Subspace: eigenvalue           = 1.007771e+00
+Subspace: elapsed time         = 4.604636e-03 sec.
+Subspace: number of iterations = 123
+Subspace: relative residual    = 9.918759e-13
+
+Subspace: mode number          = 7
+Subspace: eigenvalue           = 1.007771e+00
+Subspace: elapsed time         = 6.702394e-03 sec.
+Subspace: number of iterations = 134
+Subspace: relative residual    = 9.437551e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 4.253530e-02 sec.
+Subspace:   preconditioner     = 1.451600e-05 sec.
+Subspace:     matrix creation  = 8.900000e-07 sec.
+Subspace:   linear solver      = 1.816884e-03 sec.
+Subspace: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e li
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 1
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 0.000000e+00
+Lanczos: elapsed time         = 7.986000e-06 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 1.786352e-03 sec.
+Lanczos: number of iterations = 19
+Lanczos: relative residual    = 2.041821e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: number of iterations = 19
+Lanczos: elapsed time         = 3.850044e-03 sec.
+Lanczos:   preconditioner     = 1.368900e-05 sec.
+Lanczos:     matrix creation  = 1.173000e-06 sec.
+Lanczos:   linear solver      = 1.142350e-03 sec.
+Lanczos: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e li -ss 4 -ie pi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Power
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.884600e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 7.837972e+00
+Lanczos: elapsed time         = 5.162409e-03 sec.
+Lanczos: number of iterations = 960
+Lanczos: relative residual    = 9.715109e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 7.837972e+00
+Lanczos: elapsed time         = 2.786041e-03 sec.
+Lanczos: number of iterations = 960
+Lanczos: relative residual    = 9.715109e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 7.837972e+00
+Lanczos: elapsed time         = 3.532758e-03 sec.
+Lanczos: number of iterations = 960
+Lanczos: relative residual    = 9.715109e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 7.837972e+00
+Lanczos: elapsed time         = 2.029697e-03 sec.
+Lanczos: number of iterations = 960
+Lanczos: relative residual    = 9.715109e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 7.837972e+00
+Lanczos: number of iterations = 960
+Lanczos: elapsed time         = 5.652961e-02 sec.
+Lanczos:   preconditioner     = 0.000000e+00 sec.
+Lanczos:     matrix creation  = 0.000000e+00 sec.
+Lanczos:   linear solver      = 0.000000e+00 sec.
+Lanczos: relative residual    = 9.715109e-13
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e li -ss 4 -ie ii
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.369600e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 3.115481e-02 sec.
+Lanczos: number of iterations = 413
+Lanczos: relative residual    = 8.741705e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 1.140819e-03 sec.
+Lanczos: number of iterations = 16
+Lanczos: relative residual    = 4.713687e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 2.027704e-03 sec.
+Lanczos: number of iterations = 53
+Lanczos: relative residual    = 7.958944e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 8.477100e-04 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 2.412504e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 413
+Lanczos: elapsed time         = 3.600921e-02 sec.
+Lanczos:   preconditioner     = 4.611610e-04 sec.
+Lanczos:     matrix creation  = 1.881100e-05 sec.
+Lanczos:   linear solver      = 2.610162e-02 sec.
+Lanczos: relative residual    = 8.741705e-13
+
+hirdesh@hirdesh eigenpairs $ cd ..
+hirdesh@hirdesh 05 $ cd ..
+hirdesh@hirdesh Labs $ ls
+00                         Lab3_IterativeSolversLis.md
+01                         Lab3_IterativeSolversLis_sol.md
+02                         Lab4_IterSolPrecond.md
+03                         Lab4_IterSolPrecond_sol.md
+04                         Lab5_EigenSolvers-DD.md
+05                         SelfPractice
+Lab1b_IntroEigen.md        assets
+Lab1b_IntroEigen_sol.html  lis-2.0.34
+Lab1b_IntroEigen_sol.md    prof-sol
+Lab2_SolversEigen.md
+hirdesh@hirdesh Labs $ cd ..
+hirdesh@hirdesh NumericalLinearAlegbra $ ll
+total 24
+drwxrwxr-x  5 hirdesh hirdesh 4096 ott 15 13:00 ./
+drwxr-xr-x 10 hirdesh hirdesh 4096 ott 14 15:25 ../
+drwxrwxr-x  8 hirdesh hirdesh 4096 ott 15 13:01 .git/
+drwxrwxr-x  2 hirdesh hirdesh 4096 ott 14 15:00 .idea/
+drwxrwxr-x 12 hirdesh hirdesh 4096 ott 15 13:29 Labs/
+-rw-rw-r--  1 hirdesh hirdesh   53 set 30 15:26 README.md
+hirdesh@hirdesh NumericalLinearAlegbra $ cd Labs/
+hirdesh@hirdesh Labs $ ll
+total 220
+drwxrwxr-x 12 hirdesh hirdesh  4096 ott 15 13:29 ./
+drwxrwxr-x  5 hirdesh hirdesh  4096 ott 15 13:00 ../
+drwxrwxr-x  2 hirdesh hirdesh  4096 set 23 10:57 00/
+drwxrwxr-x  6 hirdesh hirdesh  4096 set 25 12:56 01/
+drwxrwxr-x  8 hirdesh hirdesh  4096 set 30 23:12 02/
+drwxrwxr-x  5 hirdesh hirdesh  4096 ott  2 13:23 03/
+drwxrwxr-x  3 hirdesh hirdesh  4096 ott  8 13:03 04/
+drwxrwxr-x  4 hirdesh hirdesh  4096 ott 15 14:07 05/
+-rw-rw-r--  1 hirdesh hirdesh  9022 set 25 12:42 Lab1b_IntroEigen.md
+-rw-rw-r--  1 hirdesh hirdesh 66583 set 29 23:58 Lab1b_IntroEigen_sol.html
+-rw-rw-r--  1 hirdesh hirdesh 12593 set 30 21:11 Lab1b_IntroEigen_sol.md
+-rw-rw-r--  1 hirdesh hirdesh 11063 set 25 13:41 Lab2_SolversEigen.md
+-rw-rw-r--  1 hirdesh hirdesh  5320 ott  2 13:08 Lab3_IterativeSolversLis.md
+-rw-rw-r--  1 hirdesh hirdesh  7787 ott  8 12:40 Lab3_IterativeSolversLis_sol.md
+-rw-rw-r--  1 hirdesh hirdesh 13234 ott  8 13:40 Lab4_IterSolPrecond.md
+-rw-rw-r--  1 hirdesh hirdesh 14269 ott 15 12:53 Lab4_IterSolPrecond_sol.md
+-rw-rw-r--  1 hirdesh hirdesh 15153 ott 15 13:48 Lab5_EigenSolvers-DD.md
+drwxrwxr-x  2 hirdesh hirdesh  4096 set 25 18:07 SelfPractice/
+drwxrwxr-x  2 hirdesh hirdesh  4096 set 25 12:43 assets/
+drwxrwxr-x 10 hirdesh hirdesh  4096 ott 15 13:30 lis-2.0.34/
+drwxrwxr-x  7 hirdesh hirdesh  4096 ott 15 12:56 prof-sol/
+hirdesh@hirdesh Labs $ cd lis-2.0.34/
+hirdesh@hirdesh lis-2.0.34 $ ll
+total 1080
+drwxrwxr-x 10 hirdesh hirdesh   4096 ott 15 13:30 ./
+drwxrwxr-x 12 hirdesh hirdesh   4096 ott 15 13:29 ../
+-rwxrwxrwx  1 hirdesh hirdesh    317 ott 15 13:29 AUTHORS*
+-rwxrwxrwx  1 hirdesh hirdesh   1729 ott 15 13:29 COPYING*
+-rwxrwxrwx  1 hirdesh hirdesh  56331 ott 15 13:29 ChangeLog*
+-rwxrwxrwx  1 hirdesh hirdesh   9240 ott 15 13:29 INSTALL*
+-rwxrwxrwx  1 hirdesh hirdesh  30532 ott 15 13:29 Makefile.am*
+-rwxrwxrwx  1 hirdesh hirdesh  60440 ott 15 13:29 Makefile.in*
+-rwxrwxrwx  1 hirdesh hirdesh      0 ott 15 13:29 NEWS*
+-rwxrwxrwx  1 hirdesh hirdesh   2532 ott 15 13:29 README*
+-rwxrwxrwx  1 hirdesh hirdesh  37256 ott 15 13:29 aclocal.m4*
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:29 config/
+-rwxrwxrwx  1 hirdesh hirdesh 791006 ott 15 13:29 configure*
+-rwxrwxrwx  1 hirdesh hirdesh  47136 ott 15 13:29 configure.ac*
+drwxrwxr-x  3 hirdesh hirdesh   4096 ott 15 13:30 doc/
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 graphics/
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 include/
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 m4/
+-rwxrwxrwx  1 hirdesh hirdesh    480 ott 15 13:30 reconfigure.sh*
+drwxrwxr-x 12 hirdesh hirdesh   4096 ott 15 13:30 src/
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 test/
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 win/
+hirdesh@hirdesh lis-2.0.34 $ cd test/
+hirdesh@hirdesh test $ ll
+total 844
+drwxrwxr-x  2 hirdesh hirdesh   4096 ott 15 13:30 ./
+drwxrwxr-x 10 hirdesh hirdesh   4096 ott 15 13:30 ../
+-rwxrwxrwx  1 hirdesh hirdesh   4119 ott 15 13:30 Makefile.am*
+-rwxrwxrwx  1 hirdesh hirdesh  48738 ott 15 13:30 Makefile.in*
+-rwxrwxrwx  1 hirdesh hirdesh    659 ott 15 13:30 defs*
+-rwxrwxr-x  1 hirdesh hirdesh  17272 ott 15 13:30 eigen1*
+-rw-rw-r--  1 hirdesh hirdesh   3242 ott 15 13:30 eigvec.txt
+-rwxrwxrwx  1 hirdesh hirdesh   4453 ott 15 13:30 etest1.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5688 ott 15 13:30 etest1f.F*
+-rwxrwxrwx  1 hirdesh hirdesh   6262 ott 15 13:30 etest2.c*
+-rwxrwxrwx  1 hirdesh hirdesh   6457 ott 15 13:30 etest3.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5338 ott 15 13:30 etest4.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7336 ott 15 13:30 etest4f.F*
+-rwxrwxrwx  1 hirdesh hirdesh   5080 ott 15 13:30 etest5.c*
+-rwxrwxrwx  1 hirdesh hirdesh   3493 ott 15 13:30 etest5b.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7037 ott 15 13:30 etest6.c*
+-rwxrwxrwx  1 hirdesh hirdesh   3842 ott 15 13:30 etest7.c*
+-rwxrwxrwx  1 hirdesh hirdesh   4645 ott 15 13:30 getest1.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5205 ott 15 13:30 getest5.c*
+-rwxrwxrwx  1 hirdesh hirdesh   3611 ott 15 13:30 getest5b.c*
+-rw-r--r--  1 hirdesh hirdesh  52013 ott 15 13:30 hist.txt
+-rw-rw-r--  1 hirdesh hirdesh 187366 ott 15 13:30 mhd416a.mtx
+-rw-r--r--  1 hirdesh hirdesh  13670 ott 15 13:30 sol.mtx
+-rw-r--r--  1 hirdesh hirdesh   3242 ott 15 13:30 sol.txt
+-rwxrwxrwx  1 hirdesh hirdesh   6726 ott 15 13:30 spmvtest1.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7045 ott 15 13:30 spmvtest2.c*
+-rwxrwxrwx  1 hirdesh hirdesh   6994 ott 15 13:30 spmvtest2b.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7272 ott 15 13:30 spmvtest3.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7155 ott 15 13:30 spmvtest3b.c*
+-rwxrwxrwx  1 hirdesh hirdesh   6280 ott 15 13:30 spmvtest4.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5774 ott 15 13:30 spmvtest5.c*
+-rwxrwxrwx  1 hirdesh hirdesh   1183 ott 15 13:30 test.sh*
+-rwxr-xr-x  1 hirdesh hirdesh  17752 ott 15 13:30 test1*
+-rwxrwxrwx  1 hirdesh hirdesh   5506 ott 15 13:30 test1.c*
+-rwxrwxrwx  1 hirdesh hirdesh   7066 ott 15 13:30 test1f.F*
+-rwxrwxrwx  1 hirdesh hirdesh   6024 ott 15 13:30 test2.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5864 ott 15 13:30 test2b.c*
+-rwxrwxrwx  1 hirdesh hirdesh   8371 ott 15 13:30 test2f.F90*
+-rwxrwxrwx  1 hirdesh hirdesh   6183 ott 15 13:30 test3.c*
+-rwxrwxrwx  1 hirdesh hirdesh   6052 ott 15 13:30 test3b.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5520 ott 15 13:30 test3c.c*
+-rwxrwxrwx  1 hirdesh hirdesh   3528 ott 15 13:30 test4.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5643 ott 15 13:30 test4f.F*
+-rwxrwxr-x  1 hirdesh hirdesh  17608 ott 15 13:30 test5*
+-rwxrwxrwx  1 hirdesh hirdesh   5227 ott 15 13:30 test5.c*
+-rwxrwxrwx  1 hirdesh hirdesh   4088 ott 15 13:30 test6.c*
+-rwxrwxrwx  1 hirdesh hirdesh   5676 ott 15 13:30 test6f.F90*
+-rwxrwxrwx  1 hirdesh hirdesh   2999 ott 15 13:30 test7.c*
+-rwxrwxrwx  1 hirdesh hirdesh   2759 ott 15 13:30 test7f.F*
+-rwxrwxrwx  1 hirdesh hirdesh  53712 ott 15 13:30 test8f.F90*
+-rwxrwxrwx  1 hirdesh hirdesh  19468 ott 15 13:30 testmat.mtx*
+-rwxrwxrwx  1 hirdesh hirdesh  16238 ott 15 13:30 testmat0.mtx*
+-rwxrwxrwx  1 hirdesh hirdesh  16250 ott 15 13:30 testmat2.mtx*
+-rwxrwxrwx  1 hirdesh hirdesh  25598 ott 15 13:30 testmat3.mtx*
+-rwxrwxrwx  1 hirdesh hirdesh  55165 ott 15 13:30 testmat4.mtx*
+-rwxrwxrwx  1 hirdesh hirdesh   3242 ott 15 13:30 testvec0.mtx*
+hirdesh@hirdesh test $ ```
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis etest5.c -o eigen2
+```^C
+hirdesh@hirdesh test $ mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis etest5.c -o eigen2
+hirdesh@hirdesh test $ cd ..
+hirdesh@hirdesh lis-2.0.34 $ cd test/
+hirdesh@hirdesh test $ cp -av eigen
+eigen1  eigen2
+hirdesh@hirdesh test $ cp -av eigen2
+Makefile.am   etest6.c      spmvtest4.c   test5
+Makefile.in   etest7.c      spmvtest5.c   test5.c
+defs          getest1.c     test.sh       test6.c
+eigen1        getest5.c     test1         test6f.F90
+eigen2        getest5b.c    test1.c       test7.c
+eigvec.txt    hist.txt      test1f.F      test7f.F
+etest1.c      mhd416a.mtx   test2.c       test8f.F90
+etest1f.F     sol.mtx       test2b.c      testmat.mtx
+etest2.c      sol.txt       test2f.F90    testmat0.mtx
+etest3.c      spmvtest1.c   test3.c       testmat2.mtx
+etest4.c      spmvtest2.c   test3b.c      testmat3.mtx
+etest4f.F     spmvtest2b.c  test3c.c      testmat4.mtx
+etest5.c      spmvtest3.c   test4.c       testvec0.mtx
+etest5b.c     spmvtest3b.c  test4f.F
+hirdesh@hirdesh test $ cp -av eigen2 ../
+AUTHORS         Makefile.in     configure       m4/
+COPYING         NEWS            configure.ac    reconfigure.sh
+ChangeLog       README          doc/            src/
+INSTALL         aclocal.m4      graphics/       test/
+Makefile.am     config/         include/        win/
+hirdesh@hirdesh test $ cp -av eigen2 ../
+AUTHORS         Makefile.in     configure       m4/
+COPYING         NEWS            configure.ac    reconfigure.sh
+ChangeLog       README          doc/            src/
+INSTALL         aclocal.m4      graphics/       test/
+Makefile.am     config/         include/        win/
+hirdesh@hirdesh test $ cp -av eigen2 ../
+AUTHORS         Makefile.in     configure       m4/
+COPYING         NEWS            configure.ac    reconfigure.sh
+ChangeLog       README          doc/            src/
+INSTALL         aclocal.m4      graphics/       test/
+Makefile.am     config/         include/        win/
+hirdesh@hirdesh test $ cp -av eigen2 ../../
+00/                              Lab3_IterativeSolversLis.md
+01/                              Lab3_IterativeSolversLis_sol.md
+02/                              Lab4_IterSolPrecond.md
+03/                              Lab4_IterSolPrecond_sol.md
+04/                              Lab5_EigenSolvers-DD.md
+05/                              SelfPractice/
+Lab1b_IntroEigen.md              assets/
+Lab1b_IntroEigen_sol.html        lis-2.0.34/
+Lab1b_IntroEigen_sol.md          prof-sol/
+Lab2_SolversEigen.md
+hirdesh@hirdesh test $ cp -av eigen2 ../../
+00/                              Lab3_IterativeSolversLis.md
+01/                              Lab3_IterativeSolversLis_sol.md
+02/                              Lab4_IterSolPrecond.md
+03/                              Lab4_IterSolPrecond_sol.md
+04/                              Lab5_EigenSolvers-DD.md
+05/                              SelfPractice/
+Lab1b_IntroEigen.md              assets/
+Lab1b_IntroEigen_sol.html        lis-2.0.34/
+Lab1b_IntroEigen_sol.md          prof-sol/
+Lab2_SolversEigen.md
+hirdesh@hirdesh test $ cp -av eigen2 ../../0
+00/ 01/ 02/ 03/ 04/ 05/
+hirdesh@hirdesh test $ cp -av eigen2 ../../05/
+eigenpairs/                     options-for-eigensolvers-shift/
+hirdesh@hirdesh test $ cp -av eigen2 ../../05/
+eigenpairs/                     options-for-eigensolvers-shift/
+hirdesh@hirdesh test $ cp -av eigen2 ../../05/eigenpairs/
+eigen1        hist.txt      testmat0.mtx  testmat3.mtx
+eigvec.txt    testmat.mtx   testmat2.mtx  testmat4.mtx
+hirdesh@hirdesh test $ cp -av eigen2 ../../05/eigenpairs/
+'eigen2' -> '../../05/eigenpairs/eigen2'
+hirdesh@hirdesh test $ cd ../../05/eigenpairs/
+hirdesh@hirdesh eigenpairs $ ll
+total 196
+drwxrwxr-x 2 hirdesh hirdesh  4096 ott 15 14:18 ./
+drwxrwxr-x 4 hirdesh hirdesh  4096 ott 15 14:07 ../
+-rwxrwxr-x 1 hirdesh hirdesh 17272 ott 15 14:08 eigen1*
+-rwxrwxr-x 1 hirdesh hirdesh 17544 ott 15 14:18 eigen2*
+-rw-rw-r-- 1 hirdesh hirdesh  3242 ott 15 14:13 eigvec.txt
+-rw-rw-r-- 1 hirdesh hirdesh  5382 ott 15 14:13 hist.txt
+-rwxrwxr-x 1 hirdesh hirdesh 19468 ott 15 14:08 testmat.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16238 ott 15 14:08 testmat0.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16250 ott 15 14:08 testmat2.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 25598 ott 15 14:08 testmat3.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 55165 ott 15 14:08 testmat4.mtx*
+hirdesh@hirdesh eigenpairs $ ./eigen2 testmat0.mtx evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li
+
+number of processes = 1
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.572000e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 1.529663e-02 sec.
+Lanczos: number of iterations = 413
+Lanczos: relative residual    = 9.202038e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 7.727460e-04 sec.
+Lanczos: number of iterations = 16
+Lanczos: relative residual    = 4.724835e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 1.527046e-03 sec.
+Lanczos: number of iterations = 53
+Lanczos: relative residual    = 7.873535e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 6.349130e-04 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 2.380140e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 413
+Lanczos: elapsed time         = 1.915359e-02 sec.
+Lanczos:   preconditioner     = 6.465340e-04 sec.
+Lanczos:     matrix creation  = 1.547400e-05 sec.
+Lanczos:   linear solver      = 9.769061e-03 sec.
+Lanczos: relative residual    = 9.202038e-13
+
+hirdesh@hirdesh eigenpairs $ vim eigen
+eigen1  eigen2
+hirdesh@hirdesh eigenpairs $ vim eigen
+eigen1  eigen2
+hirdesh@hirdesh eigenpairs $ vim eig
+eigen1       eigen2       eigvec.txt   eigvecs.mtx
+hirdesh@hirdesh eigenpairs $ vim eig
+eigen1       eigen2       eigvec.txt   eigvecs.mtx
+hirdesh@hirdesh eigenpairs $ vim eigvec
+eigvec.txt   eigvecs.mtx
+hirdesh@hirdesh eigenpairs $ vim eigvec.txt
+hirdesh@hirdesh eigenpairs $ ./eigen2 testmat0.mtx evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li^C
+hirdesh@hirdesh eigenpairs $ ^C
+hirdesh@hirdesh eigenpairs $ ll
+total 224
+drwxrwxr-x 2 hirdesh hirdesh  4096 ott 15 14:19 ./
+drwxrwxr-x 4 hirdesh hirdesh  4096 ott 15 14:07 ../
+-rwxrwxr-x 1 hirdesh hirdesh 17272 ott 15 14:08 eigen1*
+-rwxrwxr-x 1 hirdesh hirdesh 17544 ott 15 14:18 eigen2*
+-rw-rw-r-- 1 hirdesh hirdesh  3242 ott 15 14:13 eigvec.txt
+-rw-rw-r-- 1 hirdesh hirdesh 13626 ott 15 14:19 eigvecs.mtx
+-rw-rw-r-- 1 hirdesh hirdesh   172 ott 15 14:19 evals.mtx
+-rw-rw-r-- 1 hirdesh hirdesh  5382 ott 15 14:13 hist.txt
+-rw-rw-r-- 1 hirdesh hirdesh   175 ott 15 14:19 iters.txt
+-rw-rw-r-- 1 hirdesh hirdesh   172 ott 15 14:19 res.txt
+-rwxrwxr-x 1 hirdesh hirdesh 19468 ott 15 14:08 testmat.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16238 ott 15 14:08 testmat0.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 16250 ott 15 14:08 testmat2.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 25598 ott 15 14:08 testmat3.mtx*
+-rwxrwxr-x 1 hirdesh hirdesh 55165 ott 15 14:08 testmat4.mtx*
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li -i cg -p jacobi -etol 1.0e-10
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : Jacobi
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.517900e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 2.370399e-02 sec.
+Lanczos: number of iterations = 354
+Lanczos: relative residual    = 9.631892e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 2.620164e-03 sec.
+Lanczos: number of iterations = 14
+Lanczos: relative residual    = 1.857299e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 4.520695e-03 sec.
+Lanczos: number of iterations = 44
+Lanczos: relative residual    = 7.361625e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 2.922883e-03 sec.
+Lanczos: number of iterations = 13
+Lanczos: relative residual    = 1.420980e-11
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 354
+Lanczos: elapsed time         = 3.575160e-02 sec.
+Lanczos:   preconditioner     = 2.761790e-04 sec.
+Lanczos:     matrix creation  = 1.541600e-05 sec.
+Lanczos:   linear solver      = 1.701142e-02 sec.
+Lanczos: relative residual    = 9.631892e-11
+
+hirdesh@hirdesh eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 6 -ie ii -i cg -p ssor
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : SSOR
+size of subspace      : 6
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 2.439259e-03 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.233776e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 1.186636e-02 sec.
+Subspace: number of iterations = 89
+Subspace: relative residual    = 9.985443e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 9.339690e-03 sec.
+Subspace: number of iterations = 61
+Subspace: relative residual    = 9.536647e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 1.040052e-01 sec.
+Subspace: number of iterations = 1000
+Subspace: relative residual    = 1.044103e-12
+
+Subspace: mode number          = 4
+Subspace: eigenvalue           = 7.712926e-01
+Subspace: elapsed time         = 1.281914e-01 sec.
+Subspace: number of iterations = 1000
+Subspace: relative residual    = 1.062038e-12
+
+Subspace: mode number          = 5
+Subspace: eigenvalue           = 7.712926e-01
+Subspace: elapsed time         = 2.235352e-02 sec.
+Subspace: number of iterations = 151
+Subspace: relative residual    = 8.930656e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 3.166387e-01 sec.
+Subspace:   preconditioner     = 1.366990e-04 sec.
+Subspace:     matrix creation  = 7.300000e-07 sec.
+Subspace:   linear solver      = 2.051580e-03 sec.
+Subspace: relative residual    = 2.233776e-13
