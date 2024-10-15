@@ -33,7 +33,7 @@ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt
 
 We are computing 
 <b>input:</b> Matrix A
-<b>output:</b>  &#955;(eigen value), x<sub>&#955;<sub
+<b>output:</b>  &#955;(eigen value), x<sub>&#955;</sub>
 <b>residual:</b> ||(A- &#955;)x<sub>&#955;</sub>||
 Ax =  &#955;x Eigen Product 
 ## Options for eigensolvers 
@@ -174,7 +174,7 @@ int main(int argc, char** argv)
 
    MatrixXd A;
    A = MatrixXd(mat);
-   SelfAdjointEigenSolver<MatrixXd> eigensolver(A);
+   SelfAdjointEigenSolver<MatrixXd> eigensolver(A); // Sparse Matrix into Dense Matrix
    if (eigensolver.info() != Eigen::Success) abort();
    std::cout << "The eigenvalues of A are:\n" << eigensolver.eigenvalues() << std::endl;
    // std::cout << "Here's a matrix whose columns are eigenvectors of A \n"
