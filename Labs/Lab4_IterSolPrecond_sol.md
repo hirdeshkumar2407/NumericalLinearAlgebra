@@ -1,4 +1,4 @@
-# Iterative solvers and preconditioners with Eigen
+# Iterative solvers with Eigen
 
 In this lab we aim at evaluating some hand-made implementation of the most common iterative methods for solving linear systems. 
 
@@ -36,7 +36,7 @@ int CG(const Matrix &A, Vector &x, const Vector &b, const Preconditioner &M,
 
   for(int i = 1; i <= max_iter; i++)
     {
-      z = M.solve(r); // residual
+      z = M.solve(r);
       rho = r.dot(z);
 
       if(i == 1)
@@ -156,7 +156,30 @@ Since the convergence history is the same for the two implementation, we can con
 
 - Export the matrix constructed in the previous example using the `SparseExtra` module and repeat the previous test using the LIS library.
 
-- Try different preconditioning techniques as list do try (`jacobi`, `ssor`, `ilu`, ...)
+- Try different preconditioning techniques (`jacobi`, `ssor`, `ilu`, ...)
+
+
+### Solution
+
+Move the matrix in the LIS test folder `lis-2.0.34/test/`. Then load the LIS module and compile test1.c as following
+
+```
+module load lis
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis test1.c -o test1
+```
+
+Compare the solution with and without preconditioners:
+
+```
+mpirun -n 4 ./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg 
+mpirun -n 4 ./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg -p jacobi
+
+mpirun -n 4 ./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg -p ssor 
+mpirun -n 4 ./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg -p ssor -ssor_omega 0.8
+
+mpirun -n 4 ./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg -p ilu 
+./test1 AtestCG.mtx 2 sol.mtx hist.txt -i cg -p ilu
+```
 
 ## Hand-made Jacobi iterative solver
 
@@ -202,9 +225,7 @@ int Jacobi(const Matrix &A, Vector &x, const Vector &b, const Preconditioner &M,
 
 ### Exercise 3: Test the Jacobi method
 
-We aim to evaluate the implemented Jacobi iterative method on the usual tridiagonal square matrix corresponding to a finite difference discretization of the 1D Laplacian. We want to compare the performance of the Jacobi method with respect to the conjugate gradient. 
-
-Complete the following code accordingly:
+We evaluate the implemented Jacobi iterative method on the usual tridiagonal square matrix corresponding to a finite difference discretization of the 1D Laplacian. We compare the performance of the Jacobi method with respect to the conjugate gradient. 
 
 ```
 #include <cstdlib>                      // System includes
@@ -245,10 +266,20 @@ int main(int argc, char** argv)
 
   // Solve with CG method
   x=0*x;
-  ...
+  Eigen::DiagonalPreconditioner<double> D(A);// Create diagonal preconditioner
+  result = CG(A, x, b, D, maxit, tol);
+  cout << "CG   flag = " << result << endl;
+  cout << "iterations performed: " << maxit << endl;
+  cout << "tolerance achieved  : " << tol << endl;
+  cout << "Error:                " << (x-e).norm()<< endl;
 
   // Solve with Jacobi method
-  ...
+  x=0*x; maxit = 20000; tol = 1.e-5;
+  result = Jacobi(A, x, b, D, maxit, tol);
+  cout << "Jacobi flag = " << result << endl;
+  cout << "iterations performed: " << maxit << endl;
+  cout << "tolerance achieved  : " << tol << endl;
+  cout << "Error:                " << (x-e).norm()<< endl;
 
   return 0;
 }
@@ -274,37 +305,55 @@ Compare the iterative linear solvers on the non-symmetric square matrix of the `
 int main(int argc, char** argv)
 {
   using namespace LinearAlgebra;
-  // Some useful alias  ...
+  // Some useful alias
+  using SpMat=Eigen::SparseMatrix<double>;
+  using SpVec=Eigen::VectorXd;
 
   int n = 1000;
   double gam = -0.5;
   SpMat A(n,n);                      // define matrix
   A.reserve(2997);
   for (int i=0; i<n; i++) {
-      ...
+      A.coeffRef(i, i) = 2.0;
+      if(i>1) A.coeffRef(i, i-2) = gam;
+      if(i<n-1) A.coeffRef(i, i+1) = 1.0;
   }
 
   double tol = 1.e-8;                // Convergence tolerance
   int result, maxit = 100;           // Maximum iterations
-  int restart = 30;                  // Restart for gmres
+  int restart = 30;                 // Restart for gmres
 
   std::cout<<"Matrix size:"<<A.rows()<<"X"<<A.cols()<<std::endl;
   std::cout<<"Non zero entries:"<<A.nonZeros()<<std::endl;
-  SpVec e = ...
-  SpVec b = ...
+  SpVec e = SpVec::Ones(A.rows());
+  SpVec b = A*e;
   SpVec x(A.rows());
   Eigen::LeastSquareDiagonalPreconditioner<double> SD(A);
 
   // Solve with CGS method
   x=0*x;
   result = CGS(A, x, b, SD, maxit, tol);
-  cout << ...
+  cout << "CGS   flag = " << result << endl;
+  cout << "iterations performed: " << maxit << endl;
+  cout << "tolerance achieved  : " << tol << endl;
+  cout << "Error:                " << (x-e).norm()<< endl;
 
   // Solve with BiCGSTAB method
-  ...
+  x=0*x; maxit = 100; tol = 1.e-8;
+  Eigen::DiagonalPreconditioner<double> D(A);
+  result = BiCGSTAB(A, x, b, D, maxit, tol);
+  cout << "BiCGSTAB   flag = " << result << endl;
+  cout << "iterations performed: " << maxit << endl;
+  cout << "tolerance achieved  : " << tol << endl;
+  cout << "Error:                " << (x-e).norm()<< endl;
 
   // Solve with GMRES method
-  ...
+  x=0*x; maxit = 100; tol = 1.e-8;
+  result = GMRES(A, x, b, D, restart, maxit, tol);
+  cout << "GMRES   flag = " << result << endl;
+  cout << "iterations performed: " << maxit << endl;
+  cout << "tolerance achieved  : " << tol << endl;
+  cout << "Error:                " << (x-e).norm()<< endl;
 
   return 0;
 }
@@ -316,7 +365,7 @@ In the previous example, the results with the three methods are very similar. Th
 
 In the following exercise we aim to compare different preconditioning strategies. In Eigen there is a built-in incomplete LU preconditioner that we can provide as an argument for the available linear solver. This ILU preconditioners as two parameters (`fill_in` and `tol`) which can be used to define the accuracy of the approximated LU factorization with respect to the original matrix. 
 
-### Exercise 5: Diagonal preconditioner vs. Eigen ILU preconditioner
+### Exercise 5: Diagonal preconditionr vs. Eigen ILU preconditioner
 
 In the following example, we can observe that the default ILU preconditioner provided by Eigen is very close to a full LU factorization. Indeed, using the `Eigen::IncompleteLUT`, the CG method convergences in just two iterations. 
 
@@ -334,7 +383,6 @@ int main(int argc, char** argv)
   // Load matrix
   SpMat A;
   Eigen::loadMarket(A, "bcsstm12.mtx");
-  // Transform the loaded matrix into a symmetric one
   A = SpMat(A.transpose()) + A;
 
   double tol = 1.e-14;                 // Convergence tolerance
@@ -361,7 +409,7 @@ int main(int argc, char** argv)
   cout << "tolerance achieved  : " << tol << endl;
   std::cout << "Error norm: "<<(x-e).norm()<<std::endl;
 
-  // Hand-made CG with ILU precond
+    // Hand-made CG with ILU precond
   x = 0*x;
   result = CG(A, x, b, ILU, maxit, tol);
   std::cout <<" hand-made CG "<< std::endl;
@@ -381,7 +429,11 @@ It is also possible to assess the performances of the ILU preconditioner availab
 
 ```
 wget https://suitesparse-collection-website.herokuapp.com/MM/HB/bcsstm12.tar.gz
-... 
+tar -xf bcsstm12.tar.gz
+mv bcsstm12/bcsstm12.mtx .
+rm -rf bcsstm12 bcsstm12.tar.gz 
+
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis test1.c -o test1
 
 mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-12
 
@@ -390,26 +442,5 @@ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-12 -p il
 mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-12 -p ilu -ilu_fill 2
 ```
 
-## Algebraic Multigrid preconditioner
-
-Algebraic multigrid (AMG) solves linear systems based on multigrid principles, but in a way that only depends on the coefficients in the underlying matrix. The AMG method determines coarse “grids”, inter-grid transfer operators, and coarse-grid equations based solely on the matrix entries.
-
-The AMG preconditioner implemented in LIS is called `SA-AMG` and can be specified as an option by typing `-p saamg`. Unfortunately this preconditioner is incompatible with the use of mpi for multi-processors computations. Therefore, a serial reconfiguration of the LIS installation is needed in order to test the AMG method. 
-
-### Exercise 7
-
-Assess the performances of the SA-AMG preconditioner on the matrices considered in the previous examples.
-
-```
-gfortran test1.c -I${mkLisInc} -L${mkLisLib} -llis -o test1
-./test1 bcsstm12.mtx 2 sol.mtx hist.txt -i gmres
-./test1 bcsstm12.mtx 2 sol.mtx hist.txt -i gmres -p saamg
-./test1 bcsstm12.mtx 2 sol.mtx hist.txt -i gmres -p saamg -saamg_unsym true 
-
-gfortran test2.c -I${mkLisInc} -L${mkLisLib} -llis -o test2
-./test2 100 100 1 sol.mtx hist.txt -i cg
-./test2 100 100 1 sol.mtx hist.txt -i cg -p saamg
-./test2 100 100 1 sol.mtx hist.txt -i bicgstab -p saamg
-```
 
 ### Homework: implement the Gradient method and assess its performance 
