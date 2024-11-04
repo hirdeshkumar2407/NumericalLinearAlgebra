@@ -3,7 +3,7 @@
 Read the documentation available at
 - [Eigen user guide](https://eigen.tuxfamily.org/dox/GettingStarted.html).
 
-Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.
+Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical ransformations, numerical solvers and related algorithms.
 
 ### 1.1 A simple example
 

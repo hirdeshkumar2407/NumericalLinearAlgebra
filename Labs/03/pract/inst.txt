@@ -1,0 +1,420 @@
+2.4.1 test1
+Usage: test1 matrix_filename rhs_setting solution_filename rhistory_filename [options]
+This program inputs the data of the coefficient matrix from matrix filename and solves the linear
+equation Ax = b with the solver specified by options. It outputs the solution to solution filename
+in the extended Matrix Market format and the residual history to rhistory filename in the PLAIN
+format (see Appendix). Both the extended Matrix Market format and the Harwell-Boeing format are
+supported for matrix filename. One of the following values can be specified by rhs setting:
+0 Use the right-hand side vector b included in the data file
+1 Use b = (1, . . . , 1)T
+2 Use b = A ×(1, . . . , 1)T
+rhs filename The filename for the right-hand side vector
+The PLAIN and Matrix Market formats are supported for rhs filename. test1f.F is the Fortran version
+of test1.c
+
+Compile the file test1.c by typing
+
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis test1.c -o test1
+
+hirdesh@hirdesh test $ ./test1 testmat0.mtx 1 sol.txt hist.txt
+
+number of processes = 1
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 15
+BiCG:   double             = 15
+BiCG:   quad               = 0
+BiCG: elapsed time         = 5.855200e-05 sec.
+BiCG:   preconditioner     = 2.103000e-06 sec.
+BiCG:     matrix creation  = 4.310000e-07 sec.
+BiCG:   linear solver      = 5.644900e-05 sec.
+BiCG: relative residual    = 2.049441e-16
+
+
+/test1 testmat0.mtx testvec0.mtx sol.txt hist.txt
+
+number of processes = 1
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 15
+BiCG:   double             = 15
+BiCG:   quad               = 0
+BiCG: elapsed time         = 6.015500e-05 sec.
+BiCG:   preconditioner     = 2.406000e-06 sec.
+BiCG:     matrix creation  = 4.810000e-07 sec.
+BiCG:   linear solver      = 5.774900e-05 sec.
+BiCG: relative residual    = 2.553002e-16
+
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 testmat0.mtx 1 sol.txt hist.txt
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 15
+BiCG:   double             = 15
+BiCG:   quad               = 0
+BiCG: elapsed time         = 1.286450e-04 sec.
+BiCG:   preconditioner     = 1.630000e-06 sec.
+BiCG:     matrix creation  = 2.800000e-07 sec.
+BiCG:   linear solver      = 1.270150e-04 sec.
+BiCG: relative residual    = 1.785136e-17
+
+test2
+Usage: test2 m n matrix_type solution_filename rhistory_filename [options]
+This program solves the linear equation Ax = b, where the coefficient matrix A of size mn is a
+discretized two dimensional Laplacian using the five point central difference scheme, with the coefficient
+matrix in the storage format specified by matrix_type and the solver specified by options. It outputs
+the solution to solution filename in the extended Matrix Market format and the residual history to
+11
+rhistory filename in the PLAIN format. The right-hand side vector b is set such that the values of
+the elements of the solution x are 1. The values m and n represent the numbers of grid points in each
+dimension. test2f.F90 is the Fortran 90 version of test2.c.
+
+
+Compile the file test2.c by typing
+
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis test2.c -o test2
+
+
+mpirun -n 4 ./test1 mhd416a.mtx 2 sol.mtx hist.txt
+
+number of processes = 4
+matrix size = 416 x 416 (8562 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+BiCG: number of iterations = 1001
+BiCG:   double             = 1001
+BiCG:   quad               = 0
+BiCG: elapsed time         = 7.508182e-03 sec.
+BiCG:   preconditioner     = 1.910000e-07 sec.
+BiCG:     matrix creation  = 1.910000e-07 sec.
+BiCG:   linear solver      = 7.507991e-03 sec.
+BiCG: relative residual    = 6.086546e-02
+
+
+ mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 49
+BiCG:   double             = 49
+BiCG:   quad               = 0
+BiCG: elapsed time         = 1.934966e-03 sec.
+BiCG:   preconditioner     = 1.520800e-05 sec.
+BiCG:     matrix creation  = 3.300000e-07 sec.
+BiCG:   linear solver      = 1.919758e-03 sec.
+BiCG: relative residual    = 5.867555e-13
+
+mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i cg 
+
+mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i jacobi -maxiter 2000
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : Jacobi
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+Jacobi: number of iterations = 2001
+Jacobi:   double             = 2001
+Jacobi:   quad               = 0
+Jacobi: elapsed time         = 8.021432e-03 sec.
+Jacobi:   preconditioner     = 2.300000e-07 sec.
+Jacobi:     matrix creation  = 2.300000e-07 sec.
+Jacobi:   linear solver      = 8.021202e-03 sec.
+Jacobi: relative residual    = 9.334522e-09
+
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i gs -tol 1.0e-10
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : Gauss-Seidel
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+Gauss-Seidel: number of iterations = 1001
+Gauss-Seidel:   double             = 1001
+Gauss-Seidel:   quad               = 0
+Gauss-Seidel: elapsed time         = 6.343356e-03 sec.
+Gauss-Seidel:   preconditioner     = 2.100000e-07 sec.
+Gauss-Seidel:     matrix creation  = 2.100000e-07 sec.
+Gauss-Seidel:   linear solver      = 6.343146e-03 sec.
+Gauss-Seidel: relative residual    = 4.031969e-08
+
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -tol 1.0e-14
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-14 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 53
+BiCG:   double             = 53
+BiCG:   quad               = 0
+BiCG: elapsed time         = 4.417740e-04 sec.
+BiCG:   preconditioner     = 9.195000e-06 sec.
+BiCG:     matrix creation  = 1.910000e-07 sec.
+BiCG:   linear solver      = 4.325790e-04 sec.
+BiCG: relative residual    = 5.911229e-15
+
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 100
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 36
+BiCGSTAB:   double             = 36
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 4.908470e-04 sec.
+BiCGSTAB:   preconditioner     = 7.382000e-06 sec.
+BiCGSTAB:     matrix creation  = 1.600000e-07 sec.
+BiCGSTAB:   linear solver      = 4.834650e-04 sec.
+BiCGSTAB: relative residual    = 3.744525e-13
+
+
+mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i gmres -restart 20 
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 141
+GMRES:   double             = 141
+GMRES:   quad               = 0
+GMRES: elapsed time         = 1.571001e-03 sec.
+GMRES:   preconditioner     = 1.551300e-05 sec.
+GMRES:     matrix creation  = 2.810000e-07 sec.
+GMRES:   linear solver      = 1.555488e-03 sec.
+GMRES: relative residual    = 9.409752e-13
+
+
+mpirun -n 4 ./test1 gr_30_30.mtx 2 sol.txt hist.txt -i bicg -p jacobi
+
+number of processes = 4
+matrix size = 900 x 900 (4322 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : Jacobi
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 49
+BiCG:   double             = 49
+BiCG:   quad               = 0
+BiCG: elapsed time         = 6.597610e-04 sec.
+BiCG:   preconditioner     = 1.359600e-05 sec.
+BiCG:     matrix creation  = 4.310000e-07 sec.
+BiCG:   linear solver      = 6.461650e-04 sec.
+BiCG: relative residual    = 5.867555e-13
+
+
+hirdesh@hirdesh test $ ./test5 100 0.1 -i jacobi
+
+number of processes = 1
+n = 100, gamma = 0.100000
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : Jacobi
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+Jacobi: number of iterations = 47
+Jacobi:   double             = 47
+Jacobi:   quad               = 0
+Jacobi: elapsed time         = 4.184000e-05 sec.
+Jacobi:   preconditioner     = 3.667000e-06 sec.
+Jacobi:     matrix creation  = 2.800000e-07 sec.
+Jacobi:   linear solver      = 3.817300e-05 sec.
+Jacobi: relative residual    = 9.004096e-13
+
+hirdesh@hirdesh test $ mpirun -n 2 ./test5 100 12.0 -i gmres -restart 30  
+
+number of processes = 2
+n = 100, gamma = 12.000000
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+GMRES: number of iterations = 1001
+GMRES:   double             = 1001
+GMRES:   quad               = 0
+GMRES: elapsed time         = 9.175345e-03 sec.
+GMRES:   preconditioner     = 3.000000e-07 sec.
+GMRES:     matrix creation  = 3.000000e-07 sec.
+GMRES:   linear solver      = 9.175045e-03 sec.
+GMRES: relative residual    = 8.605463e-02
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test5 100 9.9 -i bicgstab -p sainv
+
+number of processes = 4
+n = 100, gamma = 9.900000
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : SAINV
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 295
+BiCGSTAB:   double             = 295
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 5.593324e-03 sec.
+BiCGSTAB:   preconditioner     = 1.439529e-03 sec.
+BiCGSTAB:     matrix creation  = 2.500000e-07 sec.
+BiCGSTAB:   linear solver      = 4.153795e-03 sec.
+BiCGSTAB: relative residual    = 7.827078e-13
+
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-11
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-11 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 4058
+BiCGSTAB:   double             = 4058
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 8.196833e-02 sec.
+BiCGSTAB:   preconditioner     = 1.236178e-03 sec.
+BiCGSTAB:     matrix creation  = 2.510000e-07 sec.
+BiCGSTAB:   linear solver      = 8.073215e-02 sec.
+BiCGSTAB: relative residual    = 7.808619e-12
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i gmres -tol 1e-10
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+GMRES: number of iterations = 1001
+GMRES:   double             = 1001
+GMRES:   quad               = 0
+GMRES: elapsed time         = 3.210490e-02 sec.
+GMRES:   preconditioner     = 3.710000e-07 sec.
+GMRES:     matrix creation  = 3.710000e-07 sec.
+GMRES:   linear solver      = 3.210453e-02 sec.
+GMRES: relative residual    = 2.119067e-05
+
+hirdesh@hirdesh test $ mpirun -n 4 ./test1 bcsstm12.mtx 1 sol.txt hist.txt -i bicg -p ilu
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCG
+preconditioner        : ILU(0)
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCG: number of iterations = 38
+BiCG:   double             = 38
+BiCG:   quad               = 0
+BiCG: elapsed time         = 1.507079e-03 sec.
+BiCG:   preconditioner     = 4.596330e-04 sec.
+BiCG:     matrix creation  = 2.410000e-07 sec.
+BiCG:   linear solver      = 1.047446e-03 sec.
+BiCG: relative residual    = 4.486931e-13
