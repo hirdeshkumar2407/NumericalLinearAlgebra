@@ -1,0 +1,471 @@
+- 1. Download the symmetric matrix [fluid_sym.mtx](https://webeep.polimi.it/mod/folder/view.php?id=129876). Compute the largest eigenvalue of the matrix up to a tolerance of order $10^{-6}$.
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e pi -etol 1.0e-6 -emaxiter 30000
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-06 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 1.216251e+00
+Power: number of iterations = 20927
+Power: elapsed time         = 4.521045e-01 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.998045e-07
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e pi -etol 1.0e-6 -emaxiter 12000 -shift 0.6
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-06 * ||lx||_2
+matrix storage format : CSR
+shift                 : 6.000000e-01
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 1.216251e+00
+Power: number of iterations = 11908
+Power: elapsed time         = 3.586902e-01 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.995788e-07
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ 
+
+- 2.  Compute the smallest eigenvalue of `fluid_sym.mtx` using the Inverse method. Explore different iterative methods and preconditioners in order to achieve a precision smaller than $10^{-10}$. Compare and comment the results.
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e ii -etol 1.0e-10 -emaxiter 100 
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.623745e-07
+Inverse: number of iterations = 30
+Inverse: elapsed time         = 1.705198e+00 sec.
+Inverse:   preconditioner     = 4.025500e-05 sec.
+Inverse:     matrix creation  = 2.414000e-06 sec.
+Inverse:   linear solver      = 1.688241e+00 sec.
+Inverse: relative residual    = 8.658040e-11
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e ii -etol 1.0e-10 -i cg -p ssor
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : SSOR
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.623745e-07
+Inverse: number of iterations = 14
+Inverse: elapsed time         = 6.164196e-02 sec.
+Inverse:   preconditioner     = 1.949908e-02 sec.
+Inverse:     matrix creation  = 1.292000e-06 sec.
+Inverse:   linear solver      = 4.114861e-02 sec.
+Inverse: relative residual    = 7.724950e-11
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -ei -etol 1.0e-10 -i bicgstab -p jacobi
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : LIS_MAXITER(code=4)
+
+CR: mode number          = 0
+CR: eigenvalue           = 6.457727e-01
+CR: number of iterations = 1000
+CR: elapsed time         = 7.362259e-02 sec.
+CR:   preconditioner     = 2.010000e-07 sec.
+CR:     matrix creation  = 2.010000e-07 sec.
+CR:   linear solver      = 2.136100e-05 sec.
+CR: relative residual    = 2.785250e-01
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ 
+
+- 3. Compute the eigenvalue of `fluid_sym.mtx` closest to different positive value of $\mu$ using the Inverse method with shift. Explore different iterative methods and comment the results.
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e ii -etol 1.0e-8 -shift 1.0 
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 9.982705e-01
+Inverse: number of iterations = 35
+Inverse: elapsed time         = 1.588863e-01 sec.
+Inverse:   preconditioner     = 1.526387e-03 sec.
+Inverse:     matrix creation  = 2.325000e-06 sec.
+Inverse:   linear solver      = 1.545488e-01 sec.
+Inverse: relative residual    = 6.779199e-09
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e ii -emaxiter 100 -shift 0.5 -i cg
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 5.000000e-01
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.996352e-01
+Inverse: number of iterations = 42
+Inverse: elapsed time         = 4.941391e-01 sec.
+Inverse:   preconditioner     = 5.562216e-03 sec.
+Inverse:     matrix creation  = 2.715000e-06 sec.
+Inverse:   linear solver      = 4.862354e-01 sec.
+Inverse: relative residual    = 9.593547e-13
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen1 fluid_sym.mtx eigvec.txt hist.txt -e ii -emaxiter 100 -shift 1.2 -i gmres -p sainv
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.200000e+00
+linear solver         : GMRES
+preconditioner        : SAINV
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.200492e+00
+Inverse: number of iterations = 35
+Inverse: elapsed time         = 1.095327e-01 sec.
+Inverse:   preconditioner     = 1.756032e-02 sec.
+Inverse:     matrix creation  = 2.638000e-06 sec.
+Inverse:   linear solver      = 8.777751e-02 sec.
+Inverse: relative residual    = 8.175549e-13
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ 
+
+- 4. Simultaneously compute six eigenvalues of the matrix and save the corresponding eigenvectors in a \texttt{.mtx} file. Set a precision of magnitude $10^{-7}$. 
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen2 fluid_sym.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 6 -e si -etol 1.0e-7
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 6
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: elapsed time         = 1.132578e+00 sec.
+Subspace: number of iterations = 22
+Subspace: relative residual    = 4.675992e-08
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 8.268053e-07
+Subspace: elapsed time         = 1.109951e+00 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 6.549067e-08
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 1.963099e-06
+Subspace: elapsed time         = 2.524556e+00 sec.
+Subspace: number of iterations = 47
+Subspace: relative residual    = 8.467205e-08
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 3.094134e-06
+Subspace: elapsed time         = 1.204250e+00 sec.
+Subspace: number of iterations = 22
+Subspace: relative residual    = 8.606291e-08
+
+Subspace: mode number          = 4
+Subspace: eigenvalue           = 6.188468e-06
+Subspace: elapsed time         = 2.529437e+01 sec.
+Subspace: number of iterations = 453
+Subspace: relative residual    = 9.972601e-08
+
+Subspace: mode number          = 5
+Subspace: eigenvalue           = 6.383775e-06
+Subspace: elapsed time         = 5.271695e+01 sec.
+Subspace: number of iterations = 1000
+Subspace: relative residual    = 1.060091e-07
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: number of iterations = 22
+Subspace: elapsed time         = 8.398711e+01 sec.
+Subspace:   preconditioner     = 1.400300e-05 sec.
+Subspace:     matrix creation  = 1.213000e-06 sec.
+Subspace:   linear solver      = 1.131648e+00 sec.
+Subspace: relative residual    = 4.675992e-08
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen2 fluid_sym.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 6 -e si -ie ii -i cg -p ssor -etol 1.0e-7
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : SSOR
+size of subspace      : 6
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: elapsed time         = 4.385569e-02 sec.
+Subspace: number of iterations = 10
+Subspace: relative residual    = 5.193286e-08
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 8.268053e-07
+Subspace: elapsed time         = 8.738600e-02 sec.
+Subspace: number of iterations = 22
+Subspace: relative residual    = 8.030652e-08
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 1.963099e-06
+Subspace: elapsed time         = 1.142826e-01 sec.
+Subspace: number of iterations = 28
+Subspace: relative residual    = 8.871603e-08
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 3.094134e-06
+Subspace: elapsed time         = 7.538963e-02 sec.
+Subspace: number of iterations = 23
+Subspace: relative residual    = 7.962135e-08
+
+Subspace: mode number          = 4
+Subspace: eigenvalue           = 6.188468e-06
+Subspace: elapsed time         = 2.757097e+00 sec.
+Subspace: number of iterations = 732
+Subspace: relative residual    = 9.880652e-08
+
+Subspace: mode number          = 5
+Subspace: eigenvalue           = 6.383775e-06
+Subspace: elapsed time         = 3.699848e+00 sec.
+Subspace: number of iterations = 1000
+Subspace: relative residual    = 1.094714e-07
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.623745e-07
+Subspace: number of iterations = 10
+Subspace: elapsed time         = 6.786242e+00 sec.
+Subspace:   preconditioner     = 1.391362e-02 sec.
+Subspace:     matrix creation  = 5.710000e-07 sec.
+Subspace:   linear solver      = 2.914774e-02 sec.
+Subspace: relative residual    = 5.193286e-08
+
+hirdesh@hirdesh 5.3-ex1-fluid_sym.mtx $ mpirun -n 4 ./eigen2 fluid_sym.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 6 -e li -etol 1.0e-7 
+
+number of processes = 4
+matrix size = 1572 x 1572 (30060 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 6
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 1.195049e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 9.853738e-01
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = 7.071370e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 3.097536e-01
+Lanczos: mode number          = 4
+Lanczos: Ritz value           = -1.378939e-01
+Lanczos: mode number          = 5
+Lanczos: Ritz value           = 2.036806e-02
+Lanczos: elapsed time         = 2.426230e-04 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.195049e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 1.200492e+00
+Lanczos: elapsed time         = 1.353691e-01 sec.
+Lanczos: number of iterations = 128
+Lanczos: relative residual    = 9.604194e-08
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 9.853738e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 9.756006e-01
+Lanczos: elapsed time         = 7.638099e-01 sec.
+Lanczos: number of iterations = 175
+Lanczos: relative residual    = 9.585203e-08
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 7.071370e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 7.064982e-01
+Lanczos: elapsed time         = 3.816461e-01 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 9.795619e-08
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 3.097536e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 3.098143e-01
+Lanczos: elapsed time         = 7.103933e-01 sec.
+Lanczos: number of iterations = 13
+Lanczos: relative residual    = 7.816572e-08
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : -1.378939e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : LIS_MAXITER(code=4)
+
+Lanczos: mode number          = 4
+Lanczos: eigenvalue           = -7.041434e-03
+Lanczos: elapsed time         = 3.796327e-01 sec.
+Lanczos: number of iterations = 1000
+Lanczos: relative residual    = 1.333802e-04
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-07 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.036806e-02
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 5
+Lanczos: eigenvalue           = 2.032778e-02
+Lanczos: elapsed time         = 2.017996e+00 sec.
+Lanczos: number of iterations = 35
+Lanczos: relative residual    = 8.829717e-08
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 1.200492e+00
+Lanczos: number of iterations = 128
+Lanczos: elapsed time         = 4.407221e+00 sec.
+Lanczos:   preconditioner     = 1.032685e-03 sec.
+Lanczos:     matrix creation  = 8.656000e-06 sec.
+Lanczos:   linear solver      = 1.248753e-01 sec.
+Lanczos: relative residual    = 9.604194e-08

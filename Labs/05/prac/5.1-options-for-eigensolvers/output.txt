@@ -1,0 +1,453 @@
+
+etest1
+Usage: etest1 matrix_filename evector_filename rhistory_filename [options]
+This program inputs the matrix data from matrix filename and solves the standard eigenvalue
+problem Ax = λx with the solver specified by options. It outputs the specified eigenvalue to the
+standard output, the associated eigenvector to evector filename in the extended Matrix Market format,
+and the residual history to rhistory filename in the PLAIN format. Both the Matrix Market format
+and the Harwell-Boeing format are supported for the matrix filename. etest1f.F is the Fortran version
+of etest1.c. See etest5 for obtaining multiple eigenpairs
+
+Several additional options can be selected. A non-exhaustive list is presented in the following examples:
+
+to chose the eigensolver -e + [method] (pi for power method that returns the largest eigenvalue, while ii, rqi, cg, and cr give the smallest eigenvalue):
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.837972e+00
+Power: number of iterations = 960
+Power: elapsed time         = 3.539151e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.715109e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 19
+Inverse: elapsed time         = 1.914539e-03 sec.
+Inverse:   preconditioner     = 1.108600e-05 sec.
+Inverse:     matrix creation  = 1.012000e-06 sec.
+Inverse:   linear solver      = 6.241470e-04 sec.
+Inverse: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e cg
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CG
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+CG: mode number          = 0
+CG: eigenvalue           = 1.620281e-01
+CG: number of iterations = 35
+CG: elapsed time         = 5.314601e-03 sec.
+CG:   preconditioner     = 2.013000e-06 sec.
+CG:     matrix creation  = 8.520000e-07 sec.
+CG:   linear solver      = 6.511950e-04 sec.
+CG: relative residual    = 9.848222e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e cr
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 1.620281e-01
+CR: number of iterations = 45
+CR: elapsed time         = 9.734900e-04 sec.
+CR:   preconditioner     = 1.000000e-07 sec.
+CR:     matrix creation  = 1.000000e-07 sec.
+CR:   linear solver      = 4.479000e-06 sec.
+CR: relative residual    = 5.460648e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e rqi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Rayleigh Quotient
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Rayleigh Quotient: mode number          = 0
+Rayleigh Quotient: eigenvalue           = 1.620281e-01
+Rayleigh Quotient: number of iterations = 8
+Rayleigh Quotient: elapsed time         = 2.394312e-02 sec.
+Rayleigh Quotient:   preconditioner     = 1.815900e-05 sec.
+Rayleigh Quotient:     matrix creation  = 5.710000e-07 sec.
+Rayleigh Quotient:   linear solver      = 2.351547e-02 sec.
+Rayleigh Quotient: relative residual    = 7.438762e-16
+
+for the methods resorting to inner linear iterative solvers, we can specify which solvers we want to use by the option -i + [method] (cg, bicg, gmres, bicgstab, gs, ...). They can also be preconditioned by the option -p + [method] (same methods available for sparse linear system):
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -i cg
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 19
+Inverse: elapsed time         = 1.013776e-03 sec.
+Inverse:   preconditioner     = 8.432000e-06 sec.
+Inverse:     matrix creation  = 8.110000e-07 sec.
+Inverse:   linear solver      = 7.464580e-04 sec.
+Inverse: relative residual    = 2.071976e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -i gs -p ilu 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : Gauss-Seidel
+preconditioner        : ILU
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.050703e-02
+Inverse: number of iterations = 19
+Inverse: elapsed time         = 2.646006e-02 sec.
+Inverse:   preconditioner     = 2.867836e-03 sec.
+Inverse:     matrix creation  = 1.044200e-05 sec.
+Inverse:   linear solver      = 2.302076e-02 sec.
+Inverse: relative residual    = 2.232701e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -i gmres
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.191235e-01
+Inverse: number of iterations = 66
+Inverse: elapsed time         = 1.118476e-02 sec.
+Inverse:   preconditioner     = 4.220100e-05 sec.
+Inverse:     matrix creation  = 3.260000e-06 sec.
+Inverse:   linear solver      = 8.815560e-03 sec.
+Inverse: relative residual    = 8.879903e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -i gmres
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.191235e-01
+Inverse: number of iterations = 66
+Inverse: elapsed time         = 7.616628e-03 sec.
+Inverse:   preconditioner     = 3.597900e-05 sec.
+Inverse:     matrix creation  = 3.279000e-06 sec.
+Inverse:   linear solver      = 5.766977e-03 sec.
+Inverse: relative residual    = 8.879903e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e rqi -i bicgstab -pssor
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Rayleigh Quotient
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+linear solver         : BiCGSTAB
+preconditioner        : none
+eigensolver status    : normal end
+
+Rayleigh Quotient: mode number          = 0
+Rayleigh Quotient: eigenvalue           = 4.191235e-01
+Rayleigh Quotient: number of iterations = 7
+Rayleigh Quotient: elapsed time         = 4.445892e-03 sec.
+Rayleigh Quotient:   preconditioner     = 4.691000e-05 sec.
+Rayleigh Quotient:     matrix creation  = 5.220000e-07 sec.
+Rayleigh Quotient:   linear solver      = 3.765513e-03 sec.
+Rayleigh Quotient: relative residual    = 2.613596e-13
+
+
+As for iterative methods for sparse linear system, we can specify the maximum number of iterations and the desired tolerance by setting the options -emaxiter + [int] and -etol + [real]:
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -emaxiter 100 -etol 1.e-6
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-06 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : LIS_MAXITER(code=4)
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.365014e+00
+Power: number of iterations = 100
+Power: elapsed time         = 6.811310e-04 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 1.862817e-06
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -emaxiter 200 -
+etol 1.e-15
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-15 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 20
+Inverse: elapsed time         = 1.333858e-03 sec.
+Inverse:   preconditioner     = 1.097200e-05 sec.
+Inverse:     matrix creation  = 8.220000e-07 sec.
+Inverse:   linear solver      = 9.917720e-04 sec.
+Inverse: relative residual    = 2.975202e-16
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -i gmres  -etol
+ 1.e-14
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-14 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 20
+Inverse: elapsed time         = 3.890130e-03 sec.
+Inverse:   preconditioner     = 1.090500e-05 sec.
+Inverse:     matrix creation  = 1.145000e-06 sec.
+Inverse:   linear solver      = 2.436011e-03 sec.
+Inverse: relative residual    = 0.000000e+00
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -i gs  -etol 1.
+e-14
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-14 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : Gauss-Seidel
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.620281e-01
+Inverse: number of iterations = 21
+Inverse: elapsed time         = 2.213762e-02 sec.
+Inverse:   preconditioner     = 5.509470e-04 sec.
+Inverse:     matrix creation  = 9.940000e-07 sec.
+Inverse:   linear solver      = 2.088985e-02 sec.
+Inverse: relative residual    = 9.860880e-15
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ 
+
+- The option `-shift + [real]` can be used to accelerate the convergence or to compute eigenpairs different from the one corresponding to the largest or smallest eigenvalues of $A$. Given the shift $\mu$, the selected method is applied to the matrix $A -\mu I_d$, where $I_d$ is the identity matrix of the same size of $A$.
+
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e pi -shift 4.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 1.620281e-01
+Power: number of iterations = 168
+Power: elapsed time         = 6.201450e-04 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.689440e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -shift 2.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.796384e+00
+Inverse: number of iterations = 41
+Inverse: elapsed time         = 1.203630e-02 sec.
+Inverse:   preconditioner     = 3.435100e-05 sec.
+Inverse:     matrix creation  = 1.853000e-06 sec.
+Inverse:   linear solver      = 4.561170e-03 sec.
+Inverse: relative residual    = 5.289558e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e ii -i bicgstab -shift 8.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 8.000000e+00
+linear solver         : BiCGSTAB
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 7.837972e+00
+Inverse: number of iterations = 48
+Inverse: elapsed time         = 3.380857e-03 sec.
+Inverse:   preconditioner     = 4.534300e-05 sec.
+Inverse:     matrix creation  = 2.252000e-06 sec.
+Inverse:   linear solver      = 2.791014e-03 sec.
+Inverse: relative residual    = 9.792602e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ii -shift 1.0
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 1.028388e+00
+Inverse: number of iterations = 49
+Inverse: elapsed time         = 6.115231e-03 sec.
+Inverse:   preconditioner     = 1.116420e-04 sec.
+Inverse:     matrix creation  = 1.857000e-06 sec.
+Inverse:   linear solver      = 5.661968e-03 sec.
+Inverse: relative residual    = 2.771824e-13
+
+hirdesh@hirdesh 5.1-options-for-eigensolvers $ 
+

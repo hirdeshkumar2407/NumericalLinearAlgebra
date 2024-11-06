@@ -1,0 +1,6 @@
+%%MatrixMarket vector coordinate integer general
+4
+1                          117
+2                           70
+3                           43
+4                           37

@@ -1,0 +1,823 @@
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e si -ss 4 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 1.018716e-03 sec.
+Subspace: number of iterations = 19
+Subspace: relative residual    = 2.041821e-13
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 3.247634e-03 sec.
+Subspace: number of iterations = 95
+Subspace: relative residual    = 6.401837e-13
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 5.446974e-03 sec.
+Subspace: number of iterations = 62
+Subspace: relative residual    = 6.655840e-13
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 1.100455e-02 sec.
+Subspace: number of iterations = 140
+Subspace: relative residual    = 8.602010e-13
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 19
+Subspace: elapsed time         = 2.627217e-02 sec.
+Subspace:   preconditioner     = 1.200300e-05 sec.
+Subspace:     matrix creation  = 7.630000e-07 sec.
+Subspace:   linear solver      = 8.337540e-04 sec.
+Subspace: relative residual    = 2.041821e-13
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e li -ss 4 -ie cg
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : CG
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.800400e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CG
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : LIS_MAXITER(code=4)
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.753784e+00
+Lanczos: elapsed time         = 1.164542e-01 sec.
+Lanczos: number of iterations = 1000
+Lanczos: relative residual    = 7.893579e-01
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CG
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : LIS_MAXITER(code=4)
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 1.198532e-01 sec.
+Lanczos: number of iterations = 1000
+Lanczos: relative residual    = 1.249424e-03
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CG
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 5.763230e-03 sec.
+Lanczos: number of iterations = 39
+Lanczos: relative residual    = 7.151044e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CG
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 4.360006e-03 sec.
+Lanczos: number of iterations = 32
+Lanczos: relative residual    = 7.208773e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.753784e+00
+Lanczos: number of iterations = 1000
+Lanczos: elapsed time         = 2.494703e-01 sec.
+Lanczos:   preconditioner     = 1.766000e-06 sec.
+Lanczos:     matrix creation  = 5.000000e-08 sec.
+Lanczos:   linear solver      = 3.703450e-04 sec.
+Lanczos: relative residual    = 7.893579e-01
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen1 testmat0.mtx eigvec.txt hist.txt -e li -ss 4 -ie ii -i bicgstab -p jacobi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.220300e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : LIS_MAXITER(code=4)
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = nan
+Lanczos: elapsed time         = 9.339471e+00 sec.
+Lanczos: number of iterations = 1000
+Lanczos: relative residual    = nan
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 4.518731e-03 sec.
+Lanczos: number of iterations = 16
+Lanczos: relative residual    = 4.686032e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 5.013857e-03 sec.
+Lanczos: number of iterations = 53
+Lanczos: relative residual    = 5.374426e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 5.549740e-03 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 2.045327e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = nan
+Lanczos: number of iterations = 1000
+Lanczos: elapsed time         = 9.370418e+00 sec.
+Lanczos:   preconditioner     = 3.210001e-02 sec.
+Lanczos:     matrix creation  = 5.782600e-05 sec.
+Lanczos:   linear solver      = 9.280873e+00 sec.
+Lanczos: relative residual    = nan
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen1 testmat2.mtx eigvec.txt hist.txt -e ai -ss 2 -ie rqi
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Arnoldi
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Rayleigh Quotient
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 2
+
+Ritz values:
+
+Arnoldi: mode number          = 0
+Arnoldi: Ritz value           = 2.379632e+00
+Arnoldi: mode number          = 1
+Arnoldi: Ritz value           = 2.636110e-01
+Arnoldi: elapsed time         = 3.747000e-06 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Rayleigh Quotient
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 0
+Arnoldi: eigenvalue           = 4.191235e-01
+Arnoldi: elapsed time         = 1.481144e+00 sec.
+Arnoldi: number of iterations = 303
+Arnoldi: relative residual    = 1.968028e-14
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Rayleigh Quotient
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 1
+Arnoldi: eigenvalue           = 4.191235e-01
+Arnoldi: elapsed time         = 1.575535e+00 sec.
+Arnoldi: number of iterations = 303
+Arnoldi: relative residual    = 1.968028e-14
+
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 0
+Arnoldi: eigenvalue           = 4.191235e-01
+Arnoldi: number of iterations = 303
+Arnoldi: elapsed time         = 3.079876e+00 sec.
+Arnoldi:   preconditioner     = 6.371005e-03 sec.
+Arnoldi:     matrix creation  = 1.699700e-05 sec.
+Arnoldi:   linear solver      = 1.469045e+00 sec.
+Arnoldi: relative residual    = 1.968028e-14
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ 
+
+
+
+Another implemented solution for computing multiple eigenpairs in LIS is given by `etest5`. To assess the example, follow the instructions below.
+
+- Compile the file `etest5.c` by typing 
+
+```
+mpicc -DUSE_MPI -I${mkLisInc} -L${mkLisLib} -llis etest5.c -o eigen2
+```
+
+- Run the code with multiprocessors using mpi by typing
+
+etest5
+Usage: etest5 matrix_filename evalues_filename evectors_filename residuals_filename
+iters_filename [options]
+This program inputs the matrix data from matrix filename and solves the standard eigenvalue
+problem Ax = λx with the solver specified by options. It outputs the specified number of eigenvalues,
+the number of which is given by option -ss, to evalues filename and the associated eigenvectors,
+residual norms, and numbers of iterations to
+evectors filename, residuals filename, and iters filename respectively in the extended Matrix
+Market format. Both the Matrix Market format and the Harwell-Boeing format are supported for the
+matrix filename.
+
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : BiCG
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.294500e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 3.497698e-02 sec.
+Lanczos: number of iterations = 413
+Lanczos: relative residual    = 8.741705e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 1.766875e-03 sec.
+Lanczos: number of iterations = 16
+Lanczos: relative residual    = 4.713687e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 4.800520e-03 sec.
+Lanczos: number of iterations = 53
+Lanczos: relative residual    = 7.958944e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 2.519142e-03 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 2.412504e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 413
+Lanczos: elapsed time         = 5.277941e-02 sec.
+Lanczos:   preconditioner     = 5.644280e-04 sec.
+Lanczos:     matrix creation  = 1.955300e-05 sec.
+Lanczos:   linear solver      = 2.976254e-02 sec.
+Lanczos: relative residual    = 8.741705e-13
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li -i cg -p jacobi 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : Jacobi
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 1.275400e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 3.272412e-02 sec.
+Lanczos: number of iterations = 412
+Lanczos: relative residual    = 9.897197e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 1.519664e-03 sec.
+Lanczos: number of iterations = 16
+Lanczos: relative residual    = 4.703760e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 2.459296e-03 sec.
+Lanczos: number of iterations = 53
+Lanczos: relative residual    = 7.672638e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 7.921330e-04 sec.
+Lanczos: number of iterations = 15
+Lanczos: relative residual    = 2.417663e-13
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 412
+Lanczos: elapsed time         = 4.323991e-02 sec.
+Lanczos:   preconditioner     = 4.086290e-04 sec.
+Lanczos:     matrix creation  = 2.108800e-05 sec.
+Lanczos:   linear solver      = 2.708562e-02 sec.
+Lanczos: relative residual    = 9.897197e-13
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx  evals.mtx eigvecs.mtx res.txt iters.txt -ss 4 -e li -i cg -p jacobi -etol 1.0e-10 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Lanczos
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : Jacobi
+size of subspace      : 4
+
+Ritz values:
+
+Lanczos: mode number          = 0
+Lanczos: Ritz value           = 4.058418e+00
+Lanczos: mode number          = 1
+Lanczos: Ritz value           = 1.876073e+00
+Lanczos: mode number          = 2
+Lanczos: Ritz value           = -7.719767e-01
+Lanczos: mode number          = 3
+Lanczos: Ritz value           = 2.331120e-01
+Lanczos: elapsed time         = 2.004800e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.058418e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: elapsed time         = 3.154470e-02 sec.
+Lanczos: number of iterations = 354
+Lanczos: relative residual    = 9.631892e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.876073e+00
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 1
+Lanczos: eigenvalue           = 1.796384e+00
+Lanczos: elapsed time         = 1.524392e-03 sec.
+Lanczos: number of iterations = 14
+Lanczos: relative residual    = 1.857299e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : -7.719767e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 2
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 5.667085e-03 sec.
+Lanczos: number of iterations = 44
+Lanczos: relative residual    = 7.361625e-11
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.331120e-01
+linear solver         : CG
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Lanczos: mode number          = 3
+Lanczos: eigenvalue           = 1.620281e-01
+Lanczos: elapsed time         = 9.704130e-04 sec.
+Lanczos: number of iterations = 13
+Lanczos: relative residual    = 1.420980e-11
+
+eigensolver status    : normal end
+
+Lanczos: mode number          = 0
+Lanczos: eigenvalue           = 3.763521e+00
+Lanczos: number of iterations = 354
+Lanczos: elapsed time         = 4.389192e-02 sec.
+Lanczos:   preconditioner     = 4.184390e-04 sec.
+Lanczos:     matrix creation  = 1.897000e-05 sec.
+Lanczos:   linear solver      = 2.473448e-02 sec.
+Lanczos: relative residual    = 9.631892e-11
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen2 testmat0.mtx evals.mtx eigvecs.mtx r.txt iters.txt -e si -ie ii -ss 4 -i cg -p ssor -etol 1.0e-8
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Subspace
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+inner eigensolver     : Inverse
+linear solver         : CG
+preconditioner        : SSOR
+size of subspace      : 4
+
+compute eigenpairs in subspace:
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: elapsed time         = 1.407488e-03 sec.
+Subspace: number of iterations = 13
+Subspace: relative residual    = 2.597963e-09
+
+Subspace: mode number          = 1
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 1.179742e-02 sec.
+Subspace: number of iterations = 75
+Subspace: relative residual    = 9.702173e-09
+
+Subspace: mode number          = 2
+Subspace: eigenvalue           = 3.985070e-01
+Subspace: elapsed time         = 6.498824e-03 sec.
+Subspace: number of iterations = 40
+Subspace: relative residual    = 7.249365e-09
+
+Subspace: mode number          = 3
+Subspace: eigenvalue           = 6.349859e-01
+Subspace: elapsed time         = 1.343534e-02 sec.
+Subspace: number of iterations = 92
+Subspace: relative residual    = 9.995577e-09
+
+eigensolver status    : normal end
+
+Subspace: mode number          = 0
+Subspace: eigenvalue           = 1.620281e-01
+Subspace: number of iterations = 13
+Subspace: elapsed time         = 3.773205e-02 sec.
+Subspace:   preconditioner     = 1.988510e-04 sec.
+Subspace:     matrix creation  = 5.530000e-07 sec.
+Subspace:   linear solver      = 1.016169e-03 sec.
+Subspace: relative residual    = 2.597963e-09
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ mpirun -n 4 ./eigen2 testmat2.mtx evals.mtx eigvecs.mtx res.txt iters.txt -e ai -si ii -i gmres -ss 4
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Arnoldi
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+inner eigensolver     : Inverse
+linear solver         : GMRES
+preconditioner        : none
+size of subspace      : 4
+
+Ritz values:
+
+Arnoldi: mode number          = 0
+Arnoldi: Ritz value           = 4.686327e+00
+Arnoldi: mode number          = 1
+Arnoldi: Ritz value           = 2.649815e+00
+Arnoldi: mode number          = 2
+Arnoldi: Ritz value           = 1.098150e+00
+Arnoldi: mode number          = 3
+Arnoldi: Ritz value           = 2.294924e-01
+Arnoldi: elapsed time         = 2.220300e-05 sec.
+
+computing refined eigenpairs using inner eigensolver:
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 4.686327e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 0
+Arnoldi: eigenvalue           = 4.626264e+00
+Arnoldi: elapsed time         = 4.080323e-01 sec.
+Arnoldi: number of iterations = 117
+Arnoldi: relative residual    = 6.884349e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.649815e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 1
+Arnoldi: eigenvalue           = 2.622739e+00
+Arnoldi: elapsed time         = 2.722092e-01 sec.
+Arnoldi: number of iterations = 70
+Arnoldi: relative residual    = 8.614324e-14
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 1.098150e+00
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 2
+Arnoldi: eigenvalue           = 1.028388e+00
+Arnoldi: elapsed time         = 2.420091e-02 sec.
+Arnoldi: number of iterations = 43
+Arnoldi: relative residual    = 8.214745e-13
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 2.294924e-01
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 3
+Arnoldi: eigenvalue           = 4.191235e-01
+Arnoldi: elapsed time         = 8.959264e-03 sec.
+Arnoldi: number of iterations = 37
+Arnoldi: relative residual    = 8.251128e-13
+
+eigensolver status    : normal end
+
+Arnoldi: mode number          = 0
+Arnoldi: eigenvalue           = 4.626264e+00
+Arnoldi: number of iterations = 117
+Arnoldi: elapsed time         = 7.201107e-01 sec.
+Arnoldi:   preconditioner     = 1.202302e-03 sec.
+Arnoldi:     matrix creation  = 5.637000e-06 sec.
+Arnoldi:   linear solver      = 4.009345e-01 sec.
+Arnoldi: relative residual    = 6.884349e-13
+
+hirdesh@hirdesh 5.2-options-for-multiple-eigenpairs $ 

@@ -1,0 +1,389 @@
+etest2
+Usage: etest2 m n matrix_type evector_filename rhistory_filename [options]
+This program solves the eigenvalue problem Ax = λx, where the coefficient matrix A of size mn is a
+discretized two dimensional Laplacian using the five point central difference scheme, with the coefficient
+matrix in the storage format specified by matrix_type and the solver specified by options. It outputs
+the specified eigenvalue to the standard output, the associated eigenvector to evector filename in the
+extended Matrix Market format, and the residual history to rhistory filename in the PLAIN format.
+The values m and n represent the numbers of grid points in each dimension.
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest2 20 20 1 eigvec.mtx hist.txt
+
+number of processes = 4
+matrix size = 400 x 400 (1920 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 4.467670e-02
+CR: number of iterations = 92
+CR: elapsed time         = 2.105931e-03 sec.
+CR:   preconditioner     = 2.200000e-07 sec.
+CR:     matrix creation  = 2.200000e-07 sec.
+CR:   linear solver      = 9.007000e-06 sec.
+CR: relative residual    = 7.037765e-13
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest2 20 20 1 eigvec.mtx hist.txt -e pi
+
+number of processes = 4
+matrix size = 400 x 400 (1920 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 7.822291e+00
+Power: number of iterations = 753
+Power: elapsed time         = 5.055076e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.969059e-13
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest2 20 20 1 eigvec.mtx hist.txt -e rqi -i gmres
+
+number of processes = 4
+matrix size = 400 x 400 (1920 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Rayleigh Quotient
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+linear solver         : GMRES
+preconditioner        : none
+eigensolver status    : normal end
+
+Rayleigh Quotient: mode number          = 0
+Rayleigh Quotient: eigenvalue           = 2.204006e-01
+Rayleigh Quotient: number of iterations = 15
+Rayleigh Quotient: elapsed time         = 3.502629e-01 sec.
+Rayleigh Quotient:   preconditioner     = 8.024900e-05 sec.
+Rayleigh Quotient:     matrix creation  = 7.610000e-07 sec.
+Rayleigh Quotient:   linear solver      = 3.495045e-01 sec.
+Rayleigh Quotient: relative residual    = 7.727404e-14
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest2 20 20 1 eigvec.mtx hist.txt -e ii -i gs
+
+number of processes = 4
+matrix size = 400 x 400 (1920 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : Gauss-Seidel
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.467670e-02
+Inverse: number of iterations = 18
+Inverse: elapsed time         = 6.500949e-02 sec.
+Inverse:   preconditioner     = 8.385000e-06 sec.
+Inverse:     matrix creation  = 8.320000e-07 sec.
+Inverse:   linear solver      = 6.462532e-02 sec.
+Inverse: relative residual    = 6.098094e-13
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest2 20 20 1 eigvec.mtx hist.txt -e ii -i cg -p ssor
+
+number of processes = 4
+matrix size = 400 x 400 (1920 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : SSOR
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 4.467670e-02
+Inverse: number of iterations = 18
+Inverse: elapsed time         = 3.834765e-03 sec.
+Inverse:   preconditioner     = 6.961720e-04 sec.
+Inverse:     matrix creation  = 7.420000e-07 sec.
+Inverse:   linear solver      = 2.918592e-03 sec.
+Inverse: relative residual    = 6.099050e-13
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ 
+
+ ./ex52n20 
+The eigenvalues of A are:
+0.0223383
+0.0888544
+ 0.198062
+ 0.347522
+ 0.533896
+  0.75302
+        1
+  1.26932
+  1.55496
+  1.85054
+  2.14946
+  2.44504
+  2.73068
+        3
+  3.24698
+   3.4661
+  3.65248
+  3.80194
+  3.91115
+  3.97766
+
+etest4
+Usage: etest4 n [options]
+This program solves the eigenvalue problem Ax = λx with a specified solver, where A is a tridiagonal
+
+matrix
+A =
+
+
+2 −1
+−1 2 −1
+... ... ...
+−1 2 −1
+−1 2
+
+
+of size n ×n. etest4f.F is the Fortran version of etest4.
+
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest4 100
+
+number of processes = 4
+matrix size = 25 x 25 (74 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : CR
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-12 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCG
+preconditioner        : none
+eigensolver status    : normal end
+
+CR: mode number          = 0
+CR: eigenvalue           = 9.674354e-04
+CR: number of iterations = 225
+CR: elapsed time         = 4.342365e-03 sec.
+CR:   preconditioner     = 2.510000e-07 sec.
+CR:     matrix creation  = 2.510000e-07 sec.
+CR:   linear solver      = 5.601000e-06 sec.
+CR: relative residual    = 8.939460e-13
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest4 100 -e pi -etol 1.0e-8
+
+number of processes = 4
+matrix size = 25 x 25 (74 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : LIS_MAXITER(code=4)
+
+Power: mode number          = 0
+Power: eigenvalue           = 3.995993e+00
+Power: number of iterations = 1000
+Power: elapsed time         = 2.443116e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 3.152459e-04
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest4 50 -e pi -etol 1.0e-8 -emaxiter 2000
+
+number of processes = 4
+matrix size = 13 x 13 (38 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Power
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-08 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+eigensolver status    : normal end
+
+Power: mode number          = 0
+Power: eigenvalue           = 3.984841e+00
+Power: number of iterations = 1283
+Power: elapsed time         = 2.610716e-03 sec.
+Power:   preconditioner     = 0.000000e+00 sec.
+Power:     matrix creation  = 0.000000e+00 sec.
+Power:   linear solver      = 0.000000e+00 sec.
+Power: relative residual    = 9.993726e-09
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest4 50 -e ii -etol 1.0e-10 -i cg
+
+number of processes = 4
+matrix size = 13 x 13 (38 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : CG
+preconditioner        : none
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 3.793343e-03
+Inverse: number of iterations = 11
+Inverse: elapsed time         = 6.284000e-04 sec.
+Inverse:   preconditioner     = 9.096000e-06 sec.
+Inverse:     matrix creation  = 4.310000e-07 sec.
+Inverse:   linear solver      = 5.092440e-04 sec.
+Inverse: relative residual    = 8.690663e-11
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ mpirun -n 4 ./etest4 50 -e ii -etol 1.0e-10 -i bicgstab -p jacobi
+
+number of processes = 4
+matrix size = 13 x 13 (38 nonzero entries)
+
+initial vector x      : all components set to 1
+precision             : double
+eigensolver           : Inverse
+convergence condition : ||lx-(B^-1)Ax||_2 <= 1.0e-10 * ||lx||_2
+matrix storage format : CSR
+shift                 : 0.000000e+00
+linear solver         : BiCGSTAB
+preconditioner        : Jacobi
+eigensolver status    : normal end
+
+Inverse: mode number          = 0
+Inverse: eigenvalue           = 3.793343e-03
+Inverse: number of iterations = 11
+Inverse: elapsed time         = 1.042151e-03 sec.
+Inverse:   preconditioner     = 1.707900e-05 sec.
+Inverse:     matrix creation  = 4.210000e-07 sec.
+Inverse:   linear solver      = 9.041190e-04 sec.
+Inverse: relative residual    = 8.690546e-11
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ 
+
+hirdesh@hirdesh 5.4-ex2-etest2-4 $ ./ex52n100 
+The eigenvalues of A are:
+0.000967435
+ 0.00386881
+  0.0087013
+  0.0154603
+  0.0241391
+  0.0347295
+  0.0472212
+   0.061602
+  0.0778581
+  0.0959738
+   0.115931
+   0.137712
+   0.161294
+   0.186655
+    0.21377
+   0.242613
+   0.273157
+   0.305371
+   0.339224
+   0.374684
+   0.411717
+   0.450286
+   0.490354
+   0.531883
+   0.574832
+    0.61916
+   0.664824
+   0.711779
+   0.759981
+   0.809382
+   0.859935
+   0.911592
+   0.964301
+    1.01801
+    1.07267
+    1.12823
+    1.18463
+    1.24182
+    1.29975
+    1.35835
+    1.41757
+    1.47736
+    1.53765
+    1.59839
+    1.65951
+    1.72097
+     1.7827
+    1.84463
+    1.90672
+     1.9689
+     2.0311
+    2.09328
+    2.15537
+     2.2173
+    2.27903
+    2.34049
+    2.40161
+    2.46235
+    2.52264
+    2.58243
+    2.64165
+    2.70025
+    2.75818
+    2.81537
+    2.87177
+    2.92733
+    2.98199
+     3.0357
+    3.08841
+    3.14006
+    3.19062
+    3.24002
+    3.28822
+    3.33518
+    3.38084
+    3.42517
+    3.46812
+    3.50965
+    3.54971
+    3.58828
+    3.62532
+    3.66078
+    3.69463
+    3.72684
+    3.75739
+    3.78623
+    3.81335
+    3.83871
+    3.86229
+    3.88407
+    3.90403
+    3.92214
+     3.9384
+    3.95278
+    3.96527
+    3.97586
+    3.98454
+     3.9913
+    3.99613
+    3.99903
