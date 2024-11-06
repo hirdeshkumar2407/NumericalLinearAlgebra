@@ -1,0 +1,43 @@
+mpirun -n 4 ./test1 AtestCG.mtx 1 sol.txt hist.txt -i cg -p jacobi
+
+number of processes = 4
+matrix size = 1000 x 1000 (2998 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : Jacobi
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 703
+CG:   double             = 703
+CG:   quad               = 0
+CG: elapsed time         = 5.182679e-03 sec.
+CG:   preconditioner     = 1.306220e-04 sec.
+CG:     matrix creation  = 3.500000e-07 sec.
+CG:   linear solver      = 5.052057e-03 sec.
+CG: relative residual    = 9.886442e-13
+
+hirdesh@hirdesh 4.1-b-CG-pre-jacobi-export $ mpirun -n 4 ./test1 AtestCG.mtx 1 sol.txt hist.txt -i cg -p jacobi^C
+hirdesh@hirdesh 4.1-b-CG-pre-jacobi-export $ mpirun -n 4 ./test1 AtestCG.mtx 1 sol.txt hist.txt -i cg -p jacobi
+
+number of processes = 4
+matrix size = 1000 x 1000 (2998 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : Jacobi
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 703
+CG:   double             = 703
+CG:   quad               = 0
+CG: elapsed time         = 4.855866e-03 sec.
+CG:   preconditioner     = 1.741810e-04 sec.
+CG:     matrix creation  = 2.610000e-07 sec.
+CG:   linear solver      = 4.681685e-03 sec.

@@ -1,3 +1,4 @@
+/*Compare the iterative linear solvers on the non-symmetric square matrix of the test5.c file availble on the LIS library. For the CGS method we can use the Squared Diagonal preconditioner provided by Eigen, whereas for the two other methods we adopt again the usual Jacobi preconditioner.*/
 #include <cstdlib>                      // System includes
 #include <iostream>
 #include <Eigen/SparseCore>

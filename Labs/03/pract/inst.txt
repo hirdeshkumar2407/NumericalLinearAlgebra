@@ -286,6 +286,24 @@ BiCG:   linear solver      = 6.461650e-04 sec.
 BiCG: relative residual    = 5.867555e-13
 
 
+
+Compare the iterative linear solvers on the non-symmetric square matrix of the test5.c file availble on the LIS library. 
+test5
+Usage: test5 n gamma [options]
+This program solves a linear equation Ax = b, where A is a Toeplitz matrix
+
+
+2 1
+0 2 1
+γ 0 2 1
+... ... ... ...
+γ 0 2 1
+γ 0 2
+
+
+of size n, with the solver specified by options. Note that the right-hand vector is set such that the values
+of the elements of the solution x are 1.
+
 hirdesh@hirdesh test $ ./test5 100 0.1 -i jacobi
 
 number of processes = 1

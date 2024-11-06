@@ -1,0 +1,65 @@
+hirdesh@hirdesh 4.5-ilu-precond-in-lis $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-12
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+BiCGSTAB: number of iterations = 5001
+BiCGSTAB:   double             = 5001
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 1.230110e-01 sec.
+BiCGSTAB:   preconditioner     = 5.410000e-07 sec.
+BiCGSTAB:     matrix creation  = 5.410000e-07 sec.
+BiCGSTAB:   linear solver      = 1.230105e-01 sec.
+BiCGSTAB: relative residual    = 2.003476e-12
+
+hirdesh@hirdesh 4.5-ilu-precond-in-lis $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-12
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+BiCGSTAB: number of iterations = 5001
+BiCGSTAB:   double             = 5001
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 1.038751e-01 sec.
+BiCGSTAB:   preconditioner     = 6.610000e-07 sec.
+BiCGSTAB:     matrix creation  = 6.610000e-07 sec.
+BiCGSTAB:   linear solver      = 1.038744e-01 sec.
+BiCGSTAB: relative residual    = 2.003476e-12
+
+hirdesh@hirdesh 4.5-ilu-precond-in-lis $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-12 -p ilu -ilu_fill 2 
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : ILU(2)
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 20
+BiCGSTAB:   double             = 20
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 1.177929e-03 sec.
+BiCGSTAB:   preconditioner     = 5.770660e-04 sec.
+BiCGSTAB:     matrix creation  = 5.110000e-07 sec.
+BiCGSTAB:   linear solver      = 6.008630e-04 sec.
+BiCGSTAB: relative residual    = 3.098048e-13
