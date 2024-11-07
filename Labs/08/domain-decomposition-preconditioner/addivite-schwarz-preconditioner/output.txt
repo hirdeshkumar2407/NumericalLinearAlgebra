@@ -1,0 +1,451 @@
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 testmat0.mtx 2 sol.mtx hist.txt -i cg
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 15
+CG:   double             = 15
+CG:   quad               = 0
+CG: elapsed time         = 2.559990e-04 sec.
+CG:   preconditioner     = 1.271000e-06 sec.
+CG:     matrix creation  = 3.900000e-07 sec.
+CG:   linear solver      = 2.547280e-04 sec.
+CG: relative residual    = 2.124255e-16
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 testmat0.mtx 2 sol.mtx hist.txt -i cg -adds true
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 15
+CG:   double             = 15
+CG:   quad               = 0
+CG: elapsed time         = 9.861800e-05 sec.
+CG:   preconditioner     = 9.020000e-07 sec.
+CG:     matrix creation  = 1.600000e-07 sec.
+CG:   linear solver      = 9.771600e-05 sec.
+CG: relative residual    = 2.124255e-16
+
+
+We observe that the option `-adds true` needed to specify the use of the Additive Schwarz method does not provide any preconditioner. In both cases, we get the following result
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 testmat0.mtx 2 sol.mtx hist.txt -i cg -adds true -p jacobi 
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : Jacobi + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 14
+CG:   double             = 14
+CG:   quad               = 0
+CG: elapsed time         = 1.003740e+00 sec.
+CG:   preconditioner     = 3.467700e-05 sec.
+CG:     matrix creation  = 5.310000e-07 sec.
+CG:   linear solver      = 1.003706e+00 sec.
+CG: relative residual    = 2.123973e-13
+
+
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 testmat2.mtx 2 sol.mtx hist.txt 
+-i gmres  
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 36
+GMRES:   double             = 36
+GMRES:   quad               = 0
+GMRES: elapsed time         = 4.730530e-04 sec.
+GMRES:   preconditioner     = 1.563000e-06 sec.
+GMRES:     matrix creation  = 1.500000e-07 sec.
+GMRES:   linear solver      = 4.714900e-04 sec.
+GMRES: relative residual    = 4.188251e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 testmat2.mtx 2 sol.mtx hist.txt -i gmres -adds true -p ssor
+
+number of processes = 4
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : SSOR + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 15
+GMRES:   double             = 15
+GMRES:   quad               = 0
+GMRES: elapsed time         = 2.473020e-04 sec.
+GMRES:   preconditioner     = 2.169300e-05 sec.
+GMRES:     matrix creation  = 1.700000e-07 sec.
+GMRES:   linear solver      = 2.256090e-04 sec.
+GMRES: relative residual    = 5.056216e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ 
+
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 2 ./test1 testmat2.mtx 2 sol.mtx hist.txt -i bicgstab
+
+number of processes = 2
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 26
+BiCGSTAB:   double             = 26
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 4.129890e-04 sec.
+BiCGSTAB:   preconditioner     = 4.689000e-06 sec.
+BiCGSTAB:     matrix creation  = 5.610000e-07 sec.
+BiCGSTAB:   linear solver      = 4.083000e-04 sec.
+BiCGSTAB: relative residual    = 1.242502e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 2 ./test1 testmat2.mtx 2 sol.mtx hist.txt -i bicgstab -adds true -p ilu -ilu_fill 2
+
+number of processes = 2
+matrix size = 100 x 100 (460 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : ILU(2) + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 6
+BiCGSTAB:   double             = 6
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 7.638600e-05 sec.
+BiCGSTAB:   preconditioner     = 1.711500e-05 sec.
+BiCGSTAB:     matrix creation  = 4.710000e-07 sec.
+BiCGSTAB:   linear solver      = 5.927100e-05 sec.
+BiCGSTAB: relative residual    = 1.294793e-13
+
+
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test2 100 100 0 sol.mtx hist.txt -i gmres -p ssor -adds true -adds_iter 2
+
+number of processes = 4
+matrix size = 10000 x 10000 (49600 nonzero entries)
+
+lis_matrix.c(889) : lis_matrix_set_type : error ILL_ARG :matrix_type is 0 (Set between 1 to 11)
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : SSOR + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 104
+GMRES:   double             = 104
+GMRES:   quad               = 0
+GMRES: elapsed time         = 7.101713e-02 sec.
+GMRES:   preconditioner     = 1.154909e-02 sec.
+GMRES:     matrix creation  = 2.810000e-07 sec.
+GMRES:   linear solver      = 5.946804e-02 sec.
+GMRES: relative residual    = 9.186929e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test2 100 100 0 sol.mtx hist.txt -i gmres -p ssor -adds true -adds_iter 3
+
+number of processes = 4
+matrix size = 10000 x 10000 (49600 nonzero entries)
+
+lis_matrix.c(889) : lis_matrix_set_type : error ILL_ARG :matrix_type is 0 (Set between 1 to 11)
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : SSOR + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 81
+GMRES:   double             = 81
+GMRES:   quad               = 0
+GMRES: elapsed time         = 2.893564e-02 sec.
+GMRES:   preconditioner     = 1.435099e-02 sec.
+GMRES:     matrix creation  = 5.010000e-07 sec.
+GMRES:   linear solver      = 1.458465e-02 sec.
+GMRES: relative residual    = 8.118527e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test2 100 100 0 sol.mtx hist.txt -i gmres -p ssor -adds true -adds_iter 4
+
+number of processes = 4
+matrix size = 10000 x 10000 (49600 nonzero entries)
+
+lis_matrix.c(889) : lis_matrix_set_type : error ILL_ARG :matrix_type is 0 (Set between 1 to 11)
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : GMRES
+preconditioner        : SSOR + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+GMRES: number of iterations = 76
+GMRES:   double             = 76
+GMRES:   quad               = 0
+GMRES: elapsed time         = 2.528193e-02 sec.
+GMRES:   preconditioner     = 1.570765e-02 sec.
+GMRES:     matrix creation  = 7.220000e-07 sec.
+GMRES:   linear solver      = 9.574279e-03 sec.
+GMRES: relative residual    = 6.416245e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ 
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-10
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -maxiter 5000 -tol 1e-10
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 3618
+BiCGSTAB:   double             = 3618
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 8.388528e-02 sec.
+BiCGSTAB:   preconditioner     = 1.194687e-03 sec.
+BiCGSTAB:     matrix creation  = 3.110000e-07 sec.
+BiCGSTAB:   linear solver      = 8.269060e-02 sec.
+BiCGSTAB: relative residual    = 6.634257e-11
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-10 -p sainv 
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : SAINV
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 36
+BiCGSTAB:   double             = 36
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 5.135549e-03 sec.
+BiCGSTAB:   preconditioner     = 2.263006e-03 sec.
+BiCGSTAB:     matrix creation  = 4.610000e-07 sec.
+BiCGSTAB:   linear solver      = 2.872543e-03 sec.
+BiCGSTAB: relative residual    = 7.857608e-11
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-10 -p sainv -adds true
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : SAINV + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 200
+BiCGSTAB:   double             = 200
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 4.345854e-02 sec.
+BiCGSTAB:   preconditioner     = 3.104188e-02 sec.
+BiCGSTAB:     matrix creation  = 1.710000e-07 sec.
+BiCGSTAB:   linear solver      = 1.241665e-02 sec.
+BiCGSTAB: relative residual    = 7.497663e-11
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-10 -p sainv -adds true -adds_iter 2
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : SAINV + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 31
+BiCGSTAB:   double             = 31
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 7.700489e-03 sec.
+BiCGSTAB:   preconditioner     = 6.071108e-03 sec.
+BiCGSTAB:     matrix creation  = 1.600000e-07 sec.
+BiCGSTAB:   linear solver      = 1.629381e-03 sec.
+BiCGSTAB: relative residual    = 9.789419e-11
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 bcsstm12.mtx 2 sol.txt hist.txt -i bicgstab -tol 1e-10 -p sainv -adds true -adds_iter 3
+
+number of processes = 4
+matrix size = 1473 x 1473 (10566 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : BiCGSTAB
+preconditioner        : SAINV + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-10 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+BiCGSTAB: number of iterations = 231
+BiCGSTAB:   double             = 231
+BiCGSTAB:   quad               = 0
+BiCGSTAB: elapsed time         = 6.393246e-02 sec.
+BiCGSTAB:   preconditioner     = 6.015438e-02 sec.
+BiCGSTAB:     matrix creation  = 7.510000e-07 sec.
+BiCGSTAB:   linear solver      = 3.778080e-03 sec.
+BiCGSTAB: relative residual    = 8.770803e-11
+
+
+In this case we can see that the number of iterations required to convergence does not depend monotonically on the choice of `adds_iter`.
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 nos1.mtx 1 sol.txt hist.txt -i cg
+
+number of processes = 4
+matrix size = 237 x 237 (627 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : none
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : LIS_MAXITER(code=4)
+
+CG: number of iterations = 1001
+CG:   double             = 1001
+CG:   quad               = 0
+CG: elapsed time         = 3.581201e-03 sec.
+CG:   preconditioner     = 1.600000e-07 sec.
+CG:     matrix creation  = 1.600000e-07 sec.
+CG:   linear solver      = 3.581041e-03 sec.
+CG: relative residual    = 2.767289e+01
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 nos1.mtx 1 sol.txt hist.txt -i cg -p ssor
+
+number of processes = 4
+matrix size = 237 x 237 (627 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : SSOR
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 373
+CG:   double             = 373
+CG:   quad               = 0
+CG: elapsed time         = 1.094150e-03 sec.
+CG:   preconditioner     = 9.443000e-05 sec.
+CG:     matrix creation  = 2.910000e-07 sec.
+CG:   linear solver      = 9.997200e-04 sec.
+CG: relative residual    = 9.519123e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 nos1.mtx 1 sol.txt hist.txt -i cg -p ssor -adds true -adds_iter 2
+
+number of processes = 4
+matrix size = 237 x 237 (627 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : SSOR + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 218
+CG:   double             = 218
+CG:   quad               = 0
+CG: elapsed time         = 1.218197e-03 sec.
+CG:   preconditioner     = 4.070830e-04 sec.
+CG:     matrix creation  = 2.200000e-07 sec.
+CG:   linear solver      = 8.111140e-04 sec.
+CG: relative residual    = 8.502299e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditioner $ mpirun -n 4 ./test1 nos1.mtx 1 sol.txt hist.txt -i cg -p jacobi -adds true -adds_iter 5
+
+number of processes = 4
+matrix size = 237 x 237 (627 nonzero entries)
+
+initial vector x      : all components set to 0
+precision             : double
+linear solver         : CG
+preconditioner        : Jacobi + Additive Schwarz
+convergence condition : ||b-Ax||_2 <= 1.0e-12 * ||b-Ax_0||_2
+matrix storage format : CSR
+linear solver status  : normal end
+
+CG: number of iterations = 248
+CG:   double             = 248
+CG:   quad               = 0
+CG: elapsed time         = 1.372832e-03 sec.
+CG:   preconditioner     = 7.545630e-04 sec.
+CG:     matrix creation  = 1.800000e-07 sec.
+CG:   linear solver      = 6.182690e-04 sec.
+CG: relative residual    = 7.510793e-13
+
+hirdesh@hirdesh addivite-schwarz-preconditi
+
+
+
